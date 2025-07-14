@@ -7,6 +7,10 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
 
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: 'Playfair Display', serif;
@@ -14,29 +18,25 @@
       background-size: contain;
       color: #0f1a2c;
       text-align: center;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
     }
 
     .content {
-      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
       padding: 20px;
       background-color: rgba(255, 255, 255, 0.85);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
+      border-radius: 12px;
     }
 
     .iframe-wrapper {
       width: 100%;
       max-width: 640px;
+      margin: auto;
     }
 
     iframe {
       width: 100%;
-      height: 700px;
+      min-height: 700px;
       border: none;
       border-radius: 8px;
     }
@@ -48,12 +48,19 @@
       border-radius: 8px;
       text-decoration: none;
       font-size: 1rem;
+      display: inline-block;
       margin-top: 25px;
       transition: background 0.3s ease;
     }
 
     .volver:hover {
       background-color: #345678;
+    }
+
+    @media (max-width: 600px) {
+      iframe {
+        min-height: 800px;
+      }
     }
   </style>
 </head>
