@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Confirmación de Asistencia</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
+
+    body {
+      margin: 0;
+      font-family: 'Playfair Display', serif;
+      background: url('decoracion.jpeg') no-repeat center center fixed;
+      background-size: contain;
+      color: #0f1a2c;
+      text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .content {
+      max-width: 700px;
+      margin: auto;
+      padding: 20px;
+      background-color: rgba(255, 255, 255, 0.85);
+      border-radius: 12px;
+    }
+
+    h1 {
+      font-size: 2.4rem;
+      margin-bottom: 20px;
+    }
+
+    iframe {
+      width: 640px;
+      height: 480px;
+      border: none;
+      max-width: 100%;
+      max-height: 100vh;
+    }
+
+    .volver {
+      background-color: #0f1a2c;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 1rem;
+      display: inline-block;
+      margin-top: 25px;
+      transition: background 0.3s ease;
+    }
+
+    .volver:hover {
+      background-color: #345678;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 1.8rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="content">
+    <h1>Confirma tu asistencia</h1>
+
+    <iframe 
+      width="640px"
+      height="480px"
+      src="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAKv1fLZUQVpNSUJVT1hHQ1I3OEM1N0RBQ0VLSjFXMC4u&embed=true"
+      frameborder="0"
+      marginwidth="0"
+      marginheight="0"
+      style="border: none; max-width:100%; max-height:100vh"
+      allowfullscreen
+      webkitallowfullscreen
+      mozallowfullscreen
+      msallowfullscreen>
+    </iframe>
+
+    <a href="Invitacion.html" class="volver">Volver a la invitación</a>
+  </div>
+
+</body>
+</html>
