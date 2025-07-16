@@ -30,12 +30,34 @@
 
     h1 {
       font-size: 2.8rem;
-      margin: 20px 0 10px;
+      margin: 10px 0;
+    }
+
+    h3 {
+      margin-top: 30px;
+      font-size: 1.4rem;
+      color: #0f1a2c;
     }
 
     p {
       font-size: 1.2rem;
       margin: 10px 0;
+    }
+
+    .nota-aporte {
+      font-size: 1rem;
+      font-style: italic;
+      color: #555;
+      margin-top: 15px;
+    }
+
+    .detalle {
+      margin: 20px 0;
+      padding: 15px;
+      background-color: #ffffffcc;
+      border-left: 4px solid #0f1a2c;
+      border-radius: 10px;
+      font-size: 1.1rem;
     }
 
     .rsvp-button {
@@ -55,71 +77,54 @@
     }
 
     .countdown {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       font-weight: bold;
-      margin: 30px 0;
+      margin: 20px 0;
       color: #2e3e4f;
-    }
-
-    .fecha-evento {
-      margin: 30px 0 20px;
-      padding: 15px;
-      background-color: #ffffffcc;
-      border-left: 4px solid #0f1a2c;
-      border-radius: 10px;
-      font-size: 1.2rem;
-      display: inline-block;
     }
 
     @media (max-width: 600px) {
       h1 { font-size: 2rem; }
-      p { font-size: 1rem; }
-      .rsvp-button {
-        padding: 12px 20px;
-        font-size: 0.95rem;
-      }
-      .countdown {
-        font-size: 1.3rem;
-      }
-      .fecha-evento {
-        font-size: 1rem;
-        padding: 12px;
-      }
+      h3 { font-size: 1.2rem; }
+      p, .detalle { font-size: 1rem; }
+      .countdown { font-size: 1.2rem; }
     }
   </style>
 </head>
 <body>
 
   <div class="content">
-    <h2><p>Acompáñanos en el día en que unimos nuestras vidas.</p></h2>
-    <h1>Boda de <strong>Alexandra</strong> y <strong>Cesar</strong></h1>
+    <p>Acompáñanos en el día en que unimos nuestras vidas.</p>
+    <h1>Alexandra & Cesar</h1>
 
-    <p>¡Tu compañía es un gran regalo! Pero si quieres hacernos un detallito, estaremos reuniendo aportes el día de nuestra boda para comenzar esta nueva aventura juntos.</p>
-
-    <p>
-      <strong>Código de vestimenta:</strong><br>
-      Celebra con nosotros con un look elegante y cómodo para una tarde inolvidable.<br>
-      Te recomendamos evitar el color marfil y el azul oscuro, reservados para los novios.<br>
-      El clima de Cajicá es fresco en la tarde, así que un abrigo ligero será ideal.
-    </p>
-
-    <div class="fecha-evento">
-      📅 <strong>Fecha:</strong> 24 de octubre de 2025 a las 3:00 PM
-    </div>
+    <h3>Fecha</h3>
+    <div class="detalle">📅 Viernes 24 de octubre de 2025 a las 3:00 PM</div>
 
     <div class="countdown" id="countdown">
       Cargando contador...
     </div>
 
-    <a class="rsvp-button" href="formulario.html">Confirma tu asistencia</a>
-
-    <p>
-      Lugar: <strong>Restaurante Edelweiss, Cajicá</strong><br>
+    <h3>Lugar</h3>
+    <div class="detalle">
+      📍 Restaurante Edelweiss, Cajicá<br>
       Cómo llegar con:<br>
       <a href="https://www.google.com/maps/dir/?api=1&destination=Restaurante+Edelweiss+Cajicá" target="_blank">Google Maps</a> |
       <a href="https://waze.com/ul?ll=4.9189,-74.0312&navigate=yes" target="_blank">Waze</a> |
       <a href="http://maps.apple.com/?daddr=Restaurante+Edelweiss+Cajicá" target="_blank">Apple Maps</a>
+    </div>
+
+    <h3>Código de vestimenta</h3>
+    <div class="detalle">
+      🎽 Elegante y cómodo para una tarde inolvidable.<br>
+      ❌ Evita el color marfil y el azul oscuro (reservados para los novios).<br>
+      🧥 Lleva un abrigo ligero, el clima es fresco en la tarde.
+    </div>
+
+    <p class="nota-aporte">
+      ¡Tu compañía es un gran regalo! Pero si quieres hacernos un detallito, estaremos reuniendo aportes el día de nuestra boda para comenzar esta nueva aventura juntos.
     </p>
+
+    <a class="rsvp-button" href="formulario.html">Confirma tu asistencia</a>
   </div>
 
   <script>
