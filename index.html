@@ -61,6 +61,16 @@
       color: #2e3e4f;
     }
 
+    .fecha-evento {
+      margin: 30px 0 20px;
+      padding: 15px;
+      background-color: #ffffffcc;
+      border-left: 4px solid #0f1a2c;
+      border-radius: 10px;
+      font-size: 1.2rem;
+      display: inline-block;
+    }
+
     @media (max-width: 600px) {
       h1 { font-size: 2rem; }
       p { font-size: 1rem; }
@@ -70,6 +80,10 @@
       }
       .countdown {
         font-size: 1.3rem;
+      }
+      .fecha-evento {
+        font-size: 1rem;
+        padding: 12px;
       }
     }
   </style>
@@ -89,7 +103,9 @@
       El clima de Cajicá es fresco en la tarde, así que un abrigo ligero será ideal.
     </p>
 
-    <p><strong>Fecha:</strong> 24 de octubre de 2025 a las 3:00 PM</p>
+    <div class="fecha-evento">
+      📅 <strong>Fecha:</strong> 24 de octubre de 2025 a las 3:00 PM
+    </div>
 
     <div class="countdown" id="countdown">
       Cargando contador...
