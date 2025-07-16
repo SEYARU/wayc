@@ -78,10 +78,16 @@
 
   <div class="content">
     <h2><p>Acompáñanos en el día en que unimos nuestras vidas.</p></h2>
-    <p></p>
     <h1>Boda de <strong>Alexandra</strong> y <strong>Cesar</strong></h1>
-    <p></p>
-    <p>¡Tu compañía es un gran regalo! Pero si quieres hacernos un detallito, estaremos reuniendo aportes el dia de nuestra boda para comenzar esta nueva aventura juntos.</p>
+
+    <p>¡Tu compañía es un gran regalo! Pero si quieres hacernos un detallito, estaremos reuniendo aportes el día de nuestra boda para comenzar esta nueva aventura juntos.</p>
+
+    <p>
+      <strong>Código de vestimenta:</strong><br>
+      Celebra con nosotros con un look elegante y cómodo para una tarde inolvidable.<br>
+      Te recomendamos evitar el color marfil y el azul oscuro, reservados para los novios.<br>
+      El clima de Cajicá es fresco en la tarde, así que un abrigo ligero será ideal.
+    </p>
 
     <p><strong>Fecha:</strong> 24 de octubre de 2025 a las 3:00 PM</p>
 
@@ -101,30 +107,30 @@
   </div>
 
   <script>
-  const countdownElement = document.getElementById("countdown");
-  const targetDate = new Date("2025-10-24T15:00:00").getTime(); // 3:00 PM
+    const countdownElement = document.getElementById("countdown");
+    const targetDate = new Date("2025-10-24T15:00:00").getTime(); // 3:00 PM
 
-  function updateCountdown() {
-    const now = new Date().getTime();
-    const distance = targetDate - now;
+    function updateCountdown() {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
 
-    if (distance <= 0) {
-      countdownElement.innerHTML = "¡Hoy es el gran día!";
-      return;
+      if (distance <= 0) {
+        countdownElement.innerHTML = "¡Hoy es el gran día!";
+        return;
+      }
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      countdownElement.innerHTML =
+        `Faltan ${days} días, ${hours}h ${minutes}m ${seconds}s`;
     }
 
-    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
 
-    countdownElement.innerHTML =
-      `Faltan ${days} días, ${hours}h ${minutes}m ${seconds}s`;
-  }
-
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-</script>
-  
 </body>
 </html>
