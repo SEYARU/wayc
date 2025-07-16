@@ -7,10 +7,6 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
 
-    * {
-      box-sizing: border-box;
-    }
-
     body {
       margin: 0;
       font-family: 'Playfair Display', serif;
@@ -18,38 +14,39 @@
       background-size: contain;
       color: #0f1a2c;
       text-align: center;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
     }
 
     .content {
       max-width: 700px;
-      margin: 0 auto;
+      margin: auto;
       padding: 20px;
       background-color: rgba(255, 255, 255, 0.85);
       border-radius: 12px;
     }
 
-    .iframe-wrapper {
-      width: 100%;
-      max-width: 640px;
-      margin: auto;
+    h1 {
+      font-size: 2.6rem;
+      margin: 10px 0;
     }
 
-    iframe {
-      width: 100%;
-      min-height: 700px;
-      border: none;
-      border-radius: 8px;
+    p {
+      font-size: 1.2rem;
+      margin: 10px 0 25px;
     }
 
     .volver {
       background-color: #0f1a2c;
       color: white;
       padding: 12px 20px;
-      border-radius: 8px;
       text-decoration: none;
+      border-radius: 10px;
       font-size: 1rem;
       display: inline-block;
-      margin-top: 25px;
+      margin-top: 30px;
       transition: background 0.3s ease;
     }
 
@@ -57,26 +54,27 @@
       background-color: #345678;
     }
 
+    iframe {
+      width: 100%;
+      height: 80vh;
+      border: none;
+    }
+
     @media (max-width: 600px) {
-      iframe {
-        min-height: 800px;
-      }
+      h1 { font-size: 2rem; }
+      p { font-size: 1rem; }
     }
   </style>
 </head>
 <body>
 
   <div class="content">
-    <div class="iframe-wrapper">
-      <iframe 
-        src="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAKv1fLZUQVpNSUJVT1hHQ1I3OEM1N0RBQ0VLSjFXMC4u&embed=true"
-        allowfullscreen
-        webkitallowfullscreen
-        mozallowfullscreen
-        msallowfullscreen>
-      </iframe>
-    </div>
+    <p>Acompáñanos en el día en que unimos nuestras vidas.</p>
+    <h1>Alexandra & Cesar</h1>
 
+    <iframe width="640px" height="480px" src="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAKv1fLZUQVpNSUJVT1hHQ1I3OEM1N0RBQ0VLSjFXMC4u&embed=true" frameborder="0" marginwidth="0" marginheight="0" style="border: none; max-width:100%; max-height:100vh" allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen> </iframe>
+
+    <br />
     <a href="index.html" class="volver">Volver a la invitación</a>
   </div>
 
