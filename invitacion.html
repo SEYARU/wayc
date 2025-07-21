@@ -68,6 +68,7 @@
       display: inline-block;
       margin-top: 25px;
       transition: background 0.3s ease;
+      cursor: pointer;
     }
 
     .rsvp-button:hover {
@@ -109,7 +110,7 @@
 
     <div class="countdown" id="countdown">Cargando contador...</div>
 
-    <a class="rsvp-button" href="formulario.html" aria-label="Confirmar asistencia a la boda">
+    <a class="rsvp-button" href="#" id="rsvpBtn" aria-label="Confirmar asistencia a la boda">
       Confirma tu asistencia
     </a>
 
@@ -154,6 +155,19 @@
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
+
+    // Redirección condicional según compatibilidad con iframe
+    document.getElementById("rsvpBtn").addEventListener("click", function (e) {
+      e.preventDefault();
+
+      const isCompatible = localStorage.getItem("iframeCompatible");
+
+      if (isCompatible === "true") {
+        window.location.href = "formulario.html";
+      } else {
+        window.location.href = "https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAKv1fLZUQVpNSUJVT1hHQ1I3OEM1N0RBQ0VLSjFXMC4u";
+      }
+    });
   </script>
 </body>
 </html>
