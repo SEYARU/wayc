@@ -20,30 +20,22 @@
     }
 
     .container {
-      height: 100vh;
       width: 100vw;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      cursor: pointer;
-    }
-
-    .container img {
       height: 100vh;
-      width: auto;
-      display: block;
-      max-width: 100%;
-      object-fit: contain;
+      background-image: image-set(
+        url('sobre.webp') type('image/webp'),
+        url('sobre.jpeg') type('image/jpeg')
+      );
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: contain;
+      background-color: #fff;
+      cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="container" onclick="abrirInvitacion()">
-    <picture>
-      <source srcset="sobre.webp" type="image/webp">
-      <img src="sobre.jpeg" alt="Invitación de boda - sobre" loading="lazy" />
-    </picture>
-  </div>
+  <div class="container" onclick="abrirInvitacion()"></div>
 
   <script>
     function abrirInvitacion() {
