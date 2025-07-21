@@ -7,22 +7,32 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
 
-    body {
+    html, body {
       margin: 0;
+      padding: 0;
+      height: 100%;
       font-family: 'Playfair Display', serif;
-      background: url('decoracion.png') no-repeat center center fixed;
+    }
+
+    body {
+      background-image: url('decoracion.jpg');
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-attachment: fixed;
       background-size: cover;
-      color: #0f1a2c;
-      text-align: center;
-      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .overlay {
       background-color: rgba(255, 255, 255, 0.85);
-      max-width: 700px;
-      margin: 60px auto;
-      padding: 20px;
+      padding: 40px 20px;
       border-radius: 12px;
+      max-width: 700px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
 
     h1 {
