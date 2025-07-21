@@ -4,9 +4,12 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Confirmación de Asistencia</title>
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+
+  <style>
     * {
       box-sizing: border-box;
     }
@@ -19,7 +22,10 @@
     }
 
     body {
-      background-image: url('decoracion.jpg');
+      background-image: image-set(
+        url('decoracion.webp') type('image/webp'),
+        url('decoracion.jpeg') type('image/jpeg')
+      );
       background-repeat: no-repeat;
       background-position: center center;
       background-attachment: fixed;
@@ -73,6 +79,11 @@
       border: none;
     }
 
+    #fallback {
+      display: none;
+      margin-top: 20px;
+    }
+
     @media (max-width: 600px) {
       h1 { font-size: 2rem; }
       p { font-size: 1rem; }
@@ -85,13 +96,56 @@
     <p>Acompáñanos en el día en que unimos nuestras vidas.</p>
     <h1>Alexandra & Cesar</h1>
 
+    <!-- Iframe embebido del formulario -->
     <iframe 
+      id="formFrame"
       src="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAKv1fLZUQVpNSUJVT1hHQ1I3OEM1N0RBQ0VLSjFXMC4u&embed=true"
-      allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen>
+      allowfullscreen
+      loading="lazy"
+      webkitallowfullscreen mozallowfullscreen msallowfullscreen>
     </iframe>
+
+    <!-- Fallback si no carga el iframe -->
+    <div id="fallback">
+      <p>Si el formulario no se carga correctamente, puedes abrirlo directamente aquí:</p>
+      <a class="volver"
+         href="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAKv1fLZUQVpNSUJVT1hHQ1I3OEM1N0RBQ0VLSjFXMC4u"
+         target="_blank" rel="noopener noreferrer">
+         Abrir formulario en nueva pestaña
+      </a>
+    </div>
 
     <a href="invitacion.html" class="volver">Volver a la invitación</a>
   </div>
+
+  <script>
+    // Verificar compatibilidad con iframe embebido
+    window.addEventListener("load", () => {
+      const iframe = document.getElementById("formFrame");
+
+      setTimeout(() => {
+        try {
+          const accessible = iframe.contentDocument || iframe.contentWindow.document;
+          const loaded = accessible?.body?.childElementCount > 0;
+
+          if (loaded) {
+            localStorage.setItem("iframeCompatible", "true");
+          } else {
+            localStorage.setItem("iframeCompatible", "false");
+            fallback();
+          }
+        } catch (e) {
+          localStorage.setItem("iframeCompatible", "false");
+          fallback();
+        }
+      }, 3000);
+
+      function fallback() {
+        document.getElementById("fallback").style.display = "block";
+        iframe.style.display = "none";
+      }
+    });
+  </script>
 
 </body>
 </html>
