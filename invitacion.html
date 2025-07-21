@@ -2,23 +2,32 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Boda de Alexandra y Cesar</title>
 
-  <!-- Optimización de fuentes -->
+  <!-- Preload + fuente optimizada -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" media="all">
 
   <style>
     html, body {
       margin: 0;
       padding: 0;
-      height: 100%;
+      min-height: 100%;
       font-family: 'Playfair Display', serif;
+      background-color: #fff;
     }
 
-    body {
+    /* Fondo con compatibilidad total */
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
       background-image: image-set(
         url('decoracion.webp') type('image/webp'),
         url('decoracion.jpeg') type('image/jpeg')
@@ -27,9 +36,6 @@
       background-position: center center;
       background-attachment: fixed;
       background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
     }
 
     main.overlay {
@@ -40,11 +46,16 @@
       width: 90%;
       text-align: center;
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      margin: auto;
     }
 
     h1 {
       font-size: 2.8rem;
       margin: 20px 0 10px;
+    }
+
+    h1 .nombre {
+      font-weight: bold;
     }
 
     p {
@@ -102,14 +113,14 @@
   </style>
 </head>
 <body>
-  <main class="overlay">
-    <p class="intro"></p>
+  <main class="overlay" aria-label="Invitación de boda Alexandra y Cesar">
     <p class="intro">Acompáñanos en el día en que unimos nuestras vidas.</p>
-    <h1>Boda de <strong>Alexandra</strong> y <strong>Cesar</strong></h1>
+    <h1>Boda de <span class="nombre">Alexandra</span> y <span class="nombre">Cesar</span></h1>
+
     <p>¡Tu compañía es un gran regalo! Pero si quieres hacernos un detallito, estaremos reuniendo aportes el día de nuestra boda para comenzar esta nueva aventura juntos.</p>
     <p><strong>Fecha:</strong> 24 de octubre de 2025 a las 3:00 PM</p>
 
-    <div class="countdown" id="countdown">Cargando contador...</div>
+    <div class="countdown" id="countdown" aria-live="polite">Cargando contador...</div>
 
     <a class="rsvp-button" href="#" id="rsvpBtn" aria-label="Confirmar asistencia a la boda">
       Confirma tu asistencia
@@ -118,9 +129,9 @@
     <p>
       Lugar: <strong>Restaurante Edelweiss, Cajicá</strong><br>
       Cómo llegar con:<br>
-      <a href="https://www.google.com/maps/dir/?api=1&destination=Restaurante+Edelweiss+Cajicá" target="_blank">Google Maps</a> |
-      <a href="https://waze.com/ul?ll=4.9189,-74.0312&navigate=yes" target="_blank">Waze</a> |
-      <a href="http://maps.apple.com/?daddr=Restaurante+Edelweiss+Cajicá" target="_blank">Apple Maps</a>
+      <a href="https://www.google.com/maps/dir/?api=1&destination=Restaurante+Edelweiss+Cajicá" target="_blank" rel="noopener noreferrer">Google Maps</a> |
+      <a href="https://waze.com/ul?ll=4.9189,-74.0312&navigate=yes" target="_blank" rel="noopener noreferrer">Waze</a> |
+      <a href="http://maps.apple.com/?daddr=Restaurante+Edelweiss+Cajicá" target="_blank" rel="noopener noreferrer">Apple Maps</a>
     </p>
 
     <p><strong>Código de vestimenta:</strong><br>
@@ -147,11 +158,10 @@
       const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-      if (days === 0) {
-        countdownElement.innerHTML = `¡Es hoy! Faltan ${hours}h ${minutes}m ${seconds}s`;
-      } else {
-        countdownElement.innerHTML = `Faltan ${days} días, ${hours}h ${minutes}m ${seconds}s`;
-      }
+      countdownElement.innerHTML =
+        days === 0
+          ? `¡Es hoy! Faltan ${hours}h ${minutes}m ${seconds}s`
+          : `Faltan ${days} días, ${hours}h ${minutes}m ${seconds}s`;
     }
 
     updateCountdown();
