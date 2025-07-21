@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Boda de Alexandra y Cesar</title>
 
-  <!-- Optimización de fuentes -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
@@ -34,7 +33,7 @@
 
     main.overlay {
       background-color: rgba(255, 255, 255, 0.85);
-      padding: max(40px, env(safe-area-inset-top)) 20px 40px;
+      padding: clamp(60px, 8vh, 100px) 20px 40px;
       border-radius: 12px;
       max-width: 700px;
       width: 90%;
@@ -96,7 +95,7 @@
 
     @media (max-width: 480px) {
       main.overlay {
-        padding: max(20px, env(safe-area-inset-top)) 15px 30px;
+        padding: clamp(50px, 10vh, 80px) 15px 30px;
       }
     }
   </style>
