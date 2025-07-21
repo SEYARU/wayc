@@ -2,15 +2,21 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Invitación</title>
+
+  <!-- Preload de imagen WebP optimizada -->
+  <link rel="preload" as="image" href="sobre.webp" type="image/webp" />
+
   <style>
     html, body {
       margin: 0;
       padding: 0;
+      width: 100%;
       height: 100%;
       background-color: #fff;
       overflow: hidden;
+      will-change: opacity;
     }
 
     body.fade-out {
@@ -19,20 +25,32 @@
     }
 
     .container {
-      width: 100%;
-      height: 100vh;
-      background-image: url('sobre.jpg');
+      width: 100vw;
+      background-image: image-set(
+        url('sobre.webp') type('image/webp'),
+        url('sobre.jpg') type('image/jpeg')
+      );
       background-repeat: no-repeat;
-      background-size: cover;
-      background-position: center;
+      background-size: contain;
+      background-position: center center;
+      background-color: #fff;
       cursor: pointer;
     }
   </style>
 </head>
 <body>
-  <div class="container" onclick="abrirInvitacion()"></div>
+  <div class="container" id="container" onclick="abrirInvitacion()"></div>
 
   <script>
+    // Ajustar la altura visible real para compatibilidad iOS
+    function ajustarAltura() {
+      const altoVisible = window.innerHeight;
+      document.getElementById('container').style.height = altoVisible + 'px';
+    }
+
+    window.addEventListener('load', ajustarAltura);
+    window.addEventListener('resize', ajustarAltura);
+
     function abrirInvitacion() {
       document.body.classList.add('fade-out');
       setTimeout(() => {
