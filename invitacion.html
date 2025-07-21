@@ -34,7 +34,7 @@
 
     main.overlay {
       background-color: rgba(255, 255, 255, 0.85);
-      padding: 40px 20px;
+      padding: max(40px, env(safe-area-inset-top)) 20px 40px;
       border-radius: 12px;
       max-width: 700px;
       width: 90%;
@@ -96,7 +96,7 @@
 
     @media (max-width: 480px) {
       main.overlay {
-        padding: 20px 15px;
+        padding: max(20px, env(safe-area-inset-top)) 15px 30px;
       }
     }
   </style>
