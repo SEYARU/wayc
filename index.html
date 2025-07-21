@@ -1,2 +1,64 @@
 <!DOCTYPE html>
-<!-- index.html content would go here based on previous messages -->
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Invitación</title>
+
+  <!-- Precarga de imagen optimizada -->
+  <link rel="preload" as="image" href="sobre.webp" type="image/webp" />
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      background-color: #fff;
+      overflow: hidden;
+    }
+
+    body.fade-out {
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    .container {
+      width: 100vw;
+      background-image: image-set(
+        url('sobre.webp') type('image/webp'),
+        url('sobre.jpg') type('image/jpeg')
+      );
+      background-repeat: no-repeat;
+      background-position: center center;
+      background-size: cover;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" role="button" aria-label="Abrir invitación" onclick="abrirInvitacion()" id="container"></div>
+
+  <noscript>
+    <p>Haz clic <a href="invitacion.html">aquí</a> si no se carga automáticamente.</p>
+  </noscript>
+
+  <script>
+    // Ajustar altura para iOS (y todos los dispositivos)
+    function ajustarAltura() {
+      const alto = window.innerHeight;
+      document.getElementById('container').style.height = alto + 'px';
+    }
+
+    window.addEventListener('load', ajustarAltura);
+    window.addEventListener('resize', ajustarAltura);
+
+    // Animación al abrir la invitación
+    function abrirInvitacion() {
+      document.body.classList.add('fade-out');
+      setTimeout(() => {
+        window.location.href = 'invitacion.html';
+      }, 1200);
+    }
+  </script>
+</body>
+</html>
