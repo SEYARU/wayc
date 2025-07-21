@@ -2,12 +2,13 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Invitación</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
+      width: 100%;
       height: 100%;
       background-color: #fff;
       display: flex;
@@ -22,25 +23,21 @@
     }
 
     .container {
-      width: 100%;
-      max-width: 100%;
+      width: 100vw;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      cursor: pointer;
       overflow: hidden;
+      background-color: #fff;
+      cursor: pointer;
+      padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
     }
 
-  .container img {
-    width: 100vw;
-    height: 100vh;
-    object-fit: cover;
-    display: block;
-  }
-
-    .container:hover img {
-      transform: scale(1.01);
+    .container img {
+      max-width: 100%;
+      height: auto;
+      display: block;
     }
   </style>
 </head>
