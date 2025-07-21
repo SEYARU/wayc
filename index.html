@@ -23,9 +23,23 @@
       height: 100vh;
       background-image: url('sobre.jpg');
       background-repeat: no-repeat;
-      background-size: cover;
+      background-size: contain;
       background-position: center;
+      background-color: #fff;
+      background-attachment: fixed;
+      background-blend-mode: multiply;
       cursor: pointer;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+      }
     }
   </style>
 </head>
