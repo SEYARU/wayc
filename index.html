@@ -24,6 +24,7 @@
 
     .container {
       width: 100vw;
+      background-image: url('sobre.jpg'); /* Fallback para navegadores sin image-set */
       background-image: image-set(
         url('sobre.webp') type('image/webp'),
         url('sobre.jpg') type('image/jpeg')
@@ -32,6 +33,20 @@
       background-position: center center;
       background-size: cover;
       cursor: pointer;
+
+      /* Animación de entrada */
+      animation: zoomIn 0.6s ease;
+    }
+
+    @keyframes zoomIn {
+      from {
+        transform: scale(0.95);
+        opacity: 0;
+      }
+      to {
+        transform: scale(1);
+        opacity: 1;
+      }
     }
   </style>
 </head>
@@ -43,7 +58,7 @@
   </noscript>
 
   <script>
-    // Ajustar altura para iOS (y todos los dispositivos)
+    // Ajustar altura real en móviles (especialmente iOS)
     function ajustarAltura() {
       const alto = window.innerHeight;
       document.getElementById('container').style.height = alto + 'px';
@@ -52,7 +67,7 @@
     window.addEventListener('load', ajustarAltura);
     window.addEventListener('resize', ajustarAltura);
 
-    // Animación al abrir la invitación
+    // Redirección con animación
     function abrirInvitacion() {
       document.body.classList.add('fade-out');
       setTimeout(() => {
