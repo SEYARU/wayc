@@ -2,12 +2,13 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Invitación</title>
   <style>
     html, body {
       margin: 0;
       padding: 0;
+      height: 100%;
       background-color: #fff;
       overflow: hidden;
     }
@@ -18,45 +19,25 @@
     }
 
     .container {
-      width: 100vw;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      width: 100%;
+      height: 100vh;
+      background-image: url('sobre.jpg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
       cursor: pointer;
-    }
-
-    .container img {
-      width: 100vw;
-      height: 100%;
-      object-fit: contain;
-      display: block;
     }
   </style>
 </head>
 <body>
-  <div class="container" id="container" onclick="abrirInvitacion()">
-    <picture>
-      <source srcset="sobre.webp" type="image/webp">
-      <img src="sobre.jpeg" alt="Invitación de boda - sobre" loading="lazy" />
-    </picture>
-  </div>
+  <div class="container" onclick="abrirInvitacion()"></div>
 
   <script>
-    // Ajustar altura exacta del contenedor
-    function ajustarAltura() {
-      const altoVisible = window.innerHeight;
-      document.getElementById('container').style.height = altoVisible + 'px';
-    }
-
-    // Ejecutar al cargar y al redimensionar (por rotación)
-    window.addEventListener('load', ajustarAltura);
-    window.addEventListener('resize', ajustarAltura);
-
     function abrirInvitacion() {
       document.body.classList.add('fade-out');
       setTimeout(() => {
         window.location.href = 'invitacion.html';
-      }, 1200);
+      }, 1200); // debe coincidir con la duración del transition
     }
   </script>
 </body>
