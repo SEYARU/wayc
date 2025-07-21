@@ -69,13 +69,18 @@
 
     iframe {
       width: 100%;
-      height: 80vh;
+      min-height: 600px;
       border: none;
+    }
+
+    .iframe-link {
+      font-size: 1rem;
+      margin-top: 15px;
     }
 
     @media (max-width: 600px) {
       h1 { font-size: 2rem; }
-      p { font-size: 1rem; }
+      p, .iframe-link { font-size: 1rem; }
     }
   </style>
 </head>
@@ -89,6 +94,8 @@
       src="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAKv1fLZUQVpNSUJVT1hHQ1I3OEM1N0RBQ0VLSjFXMC4u&embed=true"
       allowfullscreen webkitallowfullscreen mozallowfullscreen msallowfullscreen>
     </iframe>
+
+    <p class="iframe-link">¿Problemas para ver el formulario? <a href="https://forms.office.com/r/igksNNHjNA" target="_blank">Ábrelo aquí</a>.</p>
 
     <a href="invitacion.html" class="volver">Volver a la invitación</a>
   </div>
