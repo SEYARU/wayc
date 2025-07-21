@@ -1,53 +1,48 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Boda de Alexandra y Cesar</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
 
     html, body {
-      margin: 0; padding: 0; height: 100%;
+      margin: 0;
+      padding: 0;
+      height: 100%;
       font-family: 'Playfair Display', serif;
     }
 
     body {
-      background-image: url('decoracion_rescaled.jpg');
+      background-image: url('decoracion.jpg');
       background-repeat: no-repeat;
-      background-position: top center;
+      background-position: center center;
+      background-attachment: fixed;
       background-size: cover;
       display: flex;
       justify-content: center;
       align-items: center;
-      overflow-x: hidden;
-      padding: 20px;
     }
 
     .overlay {
-      background-color: rgba(255,255,255,0.85);
+      background-color: rgba(255, 255, 255, 0.85);
       padding: 40px 20px;
       border-radius: 12px;
-      max-width: 700px; width: 90%;
+      max-width: 700px;
+      width: 90%;
       text-align: center;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
 
-    h2 { margin-bottom: 10px; font-weight: normal; }
-    h1 { font-size: 2.8rem; margin: 10px 0; }
-    p  { font-size: 1.2rem; margin: 10px 0; }
-
-    .fecha {
-      font-weight: bold;
-      margin: 20px 0;
-      font-size: 1.3rem;
+    h1 {
+      font-size: 2.8rem;
+      margin: 20px 0 10px;
     }
 
-    .countdown {
-      font-size: 1.6rem;
-      font-weight: bold;
-      margin: 20px 0;
-      color: #2e3e4f;
+    p {
+      font-size: 1.2rem;
+      margin: 10px 0;
     }
 
     .rsvp-button {
@@ -58,76 +53,86 @@
       border-radius: 10px;
       font-size: 1rem;
       display: inline-block;
-      margin-top: 30px;
+      margin-top: 25px;
       transition: background 0.3s ease;
     }
+
     .rsvp-button:hover {
       background-color: #345678;
     }
 
+    .countdown {
+      font-size: 1.8rem;
+      font-weight: bold;
+      margin: 30px 0;
+      color: #2e3e4f;
+    }
+
     @media (max-width: 600px) {
       h1 { font-size: 2rem; }
-      p, .fecha { font-size: 1rem; }
-      .countdown { font-size: 1.3rem; }
-      .rsvp-button { padding: 12px 20px; font-size: 0.95rem; }
+      p { font-size: 1rem; }
+      .rsvp-button {
+        padding: 12px 20px;
+        font-size: 0.95rem;
+      }
+      .countdown {
+        font-size: 1.3rem;
+      }
     }
   </style>
 </head>
 <body>
   <div class="overlay">
-    <h2>Acompáñanos en el día en que unimos nuestras vidas.</h2>
-    <h1>Alexandra &amp; Cesar</h1>
+    <h2><p>Acompáñanos en el día en que unimos nuestras vidas.</p></h2>
+    <h1>Boda de <strong>Alexandra</strong> y <strong>Cesar</strong></h1>
+    <p>¡Tu compañía es un gran regalo! Pero si quieres hacernos un detallito, estaremos reuniendo aportes el día de nuestra boda para comenzar esta nueva aventura juntos.</p>
 
-    <div class="fecha">24 de octubre de 2025 a las 3:00 PM</div>
-    <div class="countdown" id="countdown">Cargando contador...</div>
+    <p><strong>Fecha:</strong> 24 de octubre de 2025 a las 3:00 PM</p>
 
-    <a id="rsvpLink" class="rsvp-button" href="#">Confirma tu asistencia</a>
+    <div class="countdown" id="countdown">
+      Cargando contador...
+    </div>
 
-    <p style="margin-top:30px;">
-      Restaurante Edelweiss, Cajicá<br>
+    <a class="rsvp-button" href="formulario.html">Confirma tu asistencia</a>
+
+    <p>
+      Lugar: <strong>Restaurante Edelweiss, Cajicá</strong><br>
+      Cómo llegar con:<br>
       <a href="https://www.google.com/maps/dir/?api=1&destination=Restaurante+Edelweiss+Cajicá" target="_blank">Google Maps</a> |
       <a href="https://waze.com/ul?ll=4.9189,-74.0312&navigate=yes" target="_blank">Waze</a> |
       <a href="http://maps.apple.com/?daddr=Restaurante+Edelweiss+Cajicá" target="_blank">Apple Maps</a>
     </p>
+
+    <p><strong>Código de vestimenta:</strong><br>
+    Elegante y cómodo para una tarde inolvidable.<br>
+    Evita el color marfil y el azul oscuro (reservados para los novios).<br>
+    Lleva un abrigo ligero, el clima es fresco en la tarde.</p>
   </div>
 
   <script>
-    // Contador
-    const countdownElement = document.getElementById("countdown");
-    const targetDate = new Date("2025-10-24T15:00:00").getTime();
-    function updateCountdown() {
-      const now = Date.now();
-      const dist = targetDate - now;
-      if (dist <= 0) {
-        countdownElement.textContent = "¡Hoy es el gran día!";
-        return;
-      }
-      const days = Math.floor(dist / (1000*60*60*24));
-      const hours = Math.floor((dist % (1000*60*60*24)) / (1000*60*60));
-      const mins  = Math.floor((dist % (1000*60*60)) / (1000*60));
-      const secs  = Math.floor((dist % (1000*60)) / 1000);
-      countdownElement.textContent =
-        `Faltan ${days} días, ${hours}h ${mins}m ${secs}s`;
-    }
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
+  const countdownElement = document.getElementById("countdown");
+  const targetDate = new Date("2025-10-24T15:00:00").getTime(); // 3:00 PM
 
-    // Lógica de redirección de botón según dispositivo
-    function isMobile() {
-      return /Android|webOS|iPhone|iPod|BlackBerry|IEMobile|Opera Mini/i
-        .test(navigator.userAgent);
+  function updateCountdown() {
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    if (distance <= 0) {
+      countdownElement.innerHTML = "¡Hoy es el gran día!";
+      return;
     }
-    document.addEventListener('DOMContentLoaded', () => {
-      const link = document.getElementById('rsvpLink');
-      if (isMobile()) {
-        // En móvil, ir directo al form de Office
-        link.href = "https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAMAAKv1fLZUQVpNSUJVT1hHQ1I3OEM1N0RBQ0VLSjFXMC4u";
-        link.target = "_blank";
-      } else {
-        // En escritorio, ir a nuestra página local
-        link.href = "formulario.html";
-      }
-    });
-  </script>
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    countdownElement.innerHTML =
+      `Faltan ${days} días, ${hours}h ${minutes}m ${seconds}s`;
+  }
+
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+</script>
 </body>
 </html>

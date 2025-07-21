@@ -1,65 +1,44 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Abrir invitación</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Invitación</title>
   <style>
-    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
-
-    * {
+    html, body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    html, body {
       height: 100%;
-      font-family: 'Playfair Display', serif;
-      overflow-x: hidden;
+      background-color: #fff;
+      overflow: hidden;
     }
 
-    body {
+    body.fade-out {
+      opacity: 0;
+      transition: opacity 1.2s ease;
+    }
+
+    .container {
+      width: 100%;
+      height: 100vh;
       background-image: url('sobre.jpg');
       background-repeat: no-repeat;
-      background-position: top center;
       background-size: cover;
-      background-attachment: scroll;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .overlay {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-color: rgba(255, 255, 255, 0.1);
-    }
-
-    .click-area {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      height: 100%;
+      background-position: center;
       cursor: pointer;
-    }
-
-    .fade {
-      animation: fadeIn 1.5s ease-in-out;
-    }
-
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
     }
   </style>
 </head>
-<body class="fade">
+<body>
+  <div class="container" onclick="abrirInvitacion()"></div>
 
-  <div class="click-area" onclick="window.location.href='invitacion.html'"></div>
-
+  <script>
+    function abrirInvitacion() {
+      document.body.classList.add('fade-out');
+      setTimeout(() => {
+        window.location.href = 'invitacion.html';
+      }, 1200); // debe coincidir con la duración del transition
+    }
+  </script>
 </body>
 </html>
