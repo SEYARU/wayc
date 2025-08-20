@@ -9,84 +9,88 @@
   <meta name="theme-color" content="#0f1a2c" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 
-  <!-- Fuentes (opcional si quieres unificar con la invitación) -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
-
   <!-- Precargas -->
+  <link rel="preload" as="image" href="decoracion.jpg" />
   <link rel="preload" as="image" href="sobre.webp" type="image/webp" />
   <link rel="prefetch" href="invitacion.html" as="document">
-  <link rel="preload" as="image" href="decoracion.jpg" imagesrcset="decoracion.jpg" />
+
+  <!-- Tipografía -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
     :root{
       --fs-h1: clamp(1.7rem, 6vw, 2.8rem);
       --fs-p:  clamp(1rem, 3.6vw, 1.2rem);
     }
-    * { box-sizing: border-box; }
-    html, body {
-      margin: 0; padding: 0; height: 100%;
-      font-family: 'Playfair Display', serif;
-      background: #fff;
+    *{ box-sizing: border-box; }
+    html, body{
+      margin:0; padding:0; height:100%;
+      font-family:'Playfair Display', serif;
+      /* Regla global: decoracion SIEMPRE visible */
+      background-image:url('decoracion.jpg');
+      background-size:cover; background-position:center; background-repeat:no-repeat;
+      overflow:hidden;
     }
+    body.fade-out{ opacity:0; transition:opacity 1.2s ease; }
+
     .container{
-      min-height: 100svh; /* robusto en iOS/Android */
-      display: grid;
-      place-items: center;
-      background-image: url('sobre.webp');
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      position: relative;
-      cursor: pointer;
-      outline: none;
+      min-height:100svh; width:100vw;
+      /* Sobre + textura decoracion por encima con baja opacidad */
+      background-image:
+        image-set(url('sobre.webp') type('image/webp'), url('sobre.jpg') type('image/jpeg'));
+      background-repeat:no-repeat;
+      background-position:center;
+      background-size:cover;
+      display:grid; place-items:center; position:relative; cursor:pointer; outline:none;
+    }
+    /* Capa sutil con decoracion por ENCIMA del sobre para que siempre se perciba */
+    .container::before{
+      content:""; position:absolute; inset:0;
+      background-image:url('decoracion.jpg');
+      background-size:cover; background-position:center; background-repeat:no-repeat;
+      opacity:.18;           /* sutil para no tapar el sobre */
+      mix-blend-mode:soft-light;
+      pointer-events:none;
     }
     .container::after{
-      content:"";
-      position: absolute; inset: 0;
-      background: linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.35));
+      content:""; position:absolute; inset:0;
+      background:linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.32));
     }
     .hero{
-      position: relative;
-      color: #fff;
-      text-align: center;
-      padding: 2rem;
-      text-shadow: 0 1px 2px rgba(0,0,0,.45);
+      position:relative; color:#fff; text-align:center; padding:2rem;
+      text-shadow:0 1px 2px rgba(0,0,0,.45);
     }
-    .hero h1{ margin: 0 0 .5rem; font-size: var(--fs-h1); line-height:1.15 }
-    .hero p{ margin: 0; font-size: var(--fs-p); line-height:1.5 }
+    .hero h1{ margin:0 0 .5rem; font-size:var(--fs-h1); line-height:1.15 }
+    .hero p{ margin:0; font-size:var(--fs-p); line-height:1.5 }
+    .container:focus-visible{ outline:3px solid #fff; outline-offset:-3px; }
 
-    /* Estado de foco accesible */
-    .container:focus-visible { outline: 3px solid #ffffff; outline-offset: -3px; }
-
-    /* Animación de salida */
-    .fade-out {
-      transition: opacity .8s ease;
-      opacity: 0;
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .fade-out { transition: none; }
+    @media (prefers-reduced-motion: reduce){
+      .fade-out{ transition:none; }
     }
   </style>
 </head>
 <body>
-  <div id="container" class="container" role="button" aria-label="Abrir invitación" tabindex="0">
+  <!-- Mantengo tus textos visibles -->
+  <div id="container" class="container" role="button" aria-label="Abrir invitación" tabindex="0" onclick="abrirInvitacion()">
     <div class="hero" aria-hidden="true">
       <h1>Boda de Alexandra y Cesar</h1>
       <p>Toca para abrir</p>
     </div>
   </div>
 
-  <script>
-    const c = document.getElementById('container');
+  <noscript>
+    <p style="padding:1rem;color:#1A1A1A;background:rgba(255,255,255,.85)">Haz clic <a href="invitacion.html">aquí</a> si no se carga automáticamente.</p>
+  </noscript>
 
+  <script>
     function abrirInvitacion(){
       document.body.classList.add('fade-out');
-      setTimeout(()=>{ location.href = 'invitacion.html'; }, 800);
+      setTimeout(()=>{ location.href='invitacion.html'; }, 1200);
     }
-
-    c.addEventListener('click', abrirInvitacion);
-    c.addEventListener('keydown', (e)=>{
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); abrirInvitacion(); }
+    // Accesible con teclado
+    const c = document.getElementById('container');
+    c.addEventListener('keydown', e=>{
+      if(e.key==='Enter' || e.key===' '){ e.preventDefault(); abrirInvitacion(); }
     });
   </script>
 </body>
