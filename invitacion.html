@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Boda de Alexandra y Cesar — Invitación</title>
+  <title>Boda de Alexandra y Cesar</title>
 
   <!-- Apariencia del navegador -->
   <meta name="theme-color" content="#0f1a2c" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 
-  <!-- Open Graph para compartir bonito -->
+  <!-- Open Graph -->
   <meta property="og:title" content="Boda de Alexandra y Cesar — 24 de octubre de 2025">
   <meta property="og:description" content="Acompáñanos en el día en que unimos nuestras vidas. Cajicá, 3:00 PM.">
   <meta property="og:image" content="sobre.webp">
@@ -26,7 +26,7 @@
       --fs-h1: clamp(1.9rem, 6.5vw, 3rem);
       --fs-h2: clamp(1.2rem, 4.5vw, 1.6rem);
       --fs-p:  clamp(1rem, 3.6vw, 1.15rem);
-      --color-prim:#2E3E4F; /* ya en tu diseño */
+      --color-prim:#2E3E4F;
       --color-text:#1A1A1A;
       --boton-bg:#2E3E4F; --boton-tx:#fff;
     }
@@ -34,9 +34,10 @@
     html, body{
       margin:0; padding:0; min-height:100%;
       font-family:'Playfair Display', serif; color:var(--color-text);
+      /* Regla global: decoracion SIEMPRE visible */
       background-image:url('decoracion.jpg');
       background-size:cover; background-position:center; background-repeat:no-repeat;
-      background-attachment: fixed; /* suave en desktop */
+      background-attachment: fixed;
     }
     /* Evitar parallax en táctiles */
     @media (hover:none) and (pointer:coarse){
@@ -48,54 +49,51 @@
       background: rgba(255,255,255,0.85);
       display:flex; align-items:center; justify-content:center;
     }
-    .wrap{
-      width:min(880px, 100%);
-      display:grid; gap:1.2rem; text-align:center;
-    }
+    .wrap{ width:min(880px, 100%); display:grid; gap:1.2rem; text-align:center; }
     h1{ font-size:var(--fs-h1); line-height:1.15; margin:.2rem 0; color:var(--color-prim); }
     h2{ font-size:var(--fs-h2); line-height:1.25; margin:.2rem 0; color:var(--color-prim); }
     p{ font-size:var(--fs-p); line-height:1.5; margin:.3rem 0; }
 
-    .countdown{
-      font-variant-numeric: tabular-nums;
-      font-weight:700; color:var(--color-prim);
-      letter-spacing:.5px;
-    }
+    .countdown{ font-variant-numeric: tabular-nums; font-weight:700; color:var(--color-prim); letter-spacing:.5px; }
 
     .btn{
       appearance:none; border:0; border-radius:16px;
       padding:14px 18px; font-size:clamp(1rem,3.6vw,1.05rem);
       background:var(--boton-bg); color:var(--boton-tx); text-decoration:none;
-      display:inline-block; min-height:44px;
-      box-shadow: 0 8px 20px rgba(0,0,0,.08);
+      display:inline-block; min-height:44px; box-shadow:0 8px 20px rgba(0,0,0,.08);
     }
     .btn:focus-visible{ outline:3px solid #000; outline-offset:2px; }
 
-    .map-grid{
-      display:grid; gap:.6rem; margin-top:.4rem;
-      grid-template-columns: 1fr;
-    }
-    .map-grid .btn{ width:100%; }
+    /* Desktop: links visibles; botones ocultos */
+    .map-links{ display:block; }
+    .map-buttons{ display:none; }
 
-    /* Menos animaciones si el usuario lo prefiere */
-    @media (prefers-reduced-motion: reduce){ *{ scroll-behavior: auto } }
+    /* Móvil táctil: mostrar botones grandes; ocultar links */
+    @media (hover:none) and (pointer:coarse){
+      .map-links{ display:none; }
+      .map-buttons{
+        display:grid; gap:.6rem; margin-top:.4rem; grid-template-columns:1fr;
+      }
+      .map-buttons .btn{ width:100%; }
+    }
+
+    @media (prefers-reduced-motion: reduce){ *{ scroll-behavior:auto } }
   </style>
 </head>
 <body>
   <div class="overlay">
     <main class="wrap">
-      <header>
-        <h1>Boda de Alexandra y Cesar</h1>
-        <p class="intro">Acompáñanos en el día en que unimos nuestras vidas.</p>
-      </header>
+      <!-- TEXTOS ORIGINALES RESTAURADOS -->
+      <p class="intro">Acompáñanos en el día en que unimos nuestras vidas.</p>
+      <h1>Boda de <strong>Alexandra</strong> y <strong>Cesar</strong></h1>
+      <p>¡Tu compañía es un gran regalo! Pero si quieres hacernos un detallito, estaremos reuniendo aportes el día de nuestra boda para comenzar esta nueva aventura juntos.</p>
 
       <section aria-labelledby="evento">
         <h2 id="evento">Detalles del evento</h2>
-        <p><strong>Fecha:</strong> Viernes, 24 de octubre de 2025 — <strong>3:00 PM</strong></p>
-        <p><strong>Lugar:</strong> Restaurante Edelweiss, Cajicá, Cundinamarca</p>
-        <p><span id="countdown" class="countdown" aria-live="polite">Calculando…</span></p>
+        <p><strong>Fecha:</strong> 24 de octubre de 2025 a las 3:00 PM</p>
+        <div id="countdown" class="countdown" aria-live="polite">Cargando contador...</div>
 
-        <!-- Añadir al calendario (UTC: 20:00–23:00Z equivale a 3–6 PM Bogotá) -->
+        <!-- Añadir al calendario -->
         <p>
           <a class="btn" download="Boda-Alexandra-Cesar.ics"
              href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0AUID:boda-ac-2025%0ADTSTAMP:20250820T120000Z%0ADTSTART:20251024T200000Z%0ADTEND:20251024T230000Z%0ASUMMARY:Boda%20de%20Alexandra%20y%20Cesar%0ALOCATION:Restaurante%20Edelweiss,%20Cajic%C3%A1%0ADESCRIPTION:Acomp%C3%A1%C3%B1anos%20en%20el%20d%C3%ADa%20en%20que%20unimos%20nuestras%20vidas.%0AEND:VEVENT%0AEND:VCALENDAR">
@@ -106,47 +104,65 @@
 
       <section aria-labelledby="como-llegar">
         <h2 id="como-llegar">Cómo llegar</h2>
-        <div class="map-grid">
-          <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/search/?api=1&query=Restaurante+Edelweiss+Cajic%C3%A1">Abrir en Google Maps</a>
-          <a class="btn" target="_blank" rel="noopener" href="https://ul.waze.com/ul?ll=&q=Restaurante%20Edelweiss%20Cajic%C3%A1&navigate=yes">Abrir en Waze</a>
-          <a class="btn" target="_blank" rel="noopener" href="http://maps.apple.com/?q=Restaurante+Edelweiss+Cajic%C3%A1">Abrir en Apple Maps</a>
+
+        <!-- DESKTOP: links en línea (original) -->
+        <p class="map-links">
+          Lugar: <strong>Restaurante Edelweiss, Cajicá</strong><br>
+          Cómo llegar con:<br>
+          <a href="https://www.google.com/maps/dir/?api=1&destination=Restaurante+Edelweiss+Cajic%C3%A1" target="_blank" rel="noopener">Google Maps</a> |
+          <a href="https://waze.com/ul?ll=4.9189,-74.0312&navigate=yes" target="_blank" rel="noopener">Waze</a> |
+          <a href="http://maps.apple.com/?daddr=Restaurante+Edelweiss+Cajic%C3%A1" target="_blank" rel="noopener">Apple Maps</a>
+        </p>
+
+        <!-- MÓVIL: botones grandes -->
+        <div class="map-buttons" aria-hidden="true">
+          <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Restaurante+Edelweiss+Cajic%C3%A1">Abrir en Google Maps</a>
+          <a class="btn" target="_blank" rel="noopener" href="https://waze.com/ul?ll=4.9189,-74.0312&navigate=yes">Abrir en Waze</a>
+          <a class="btn" target="_blank" rel="noopener" href="http://maps.apple.com/?daddr=Restaurante+Edelweiss+Cajic%C3%A1">Abrir en Apple Maps</a>
         </div>
       </section>
 
+      <section aria-labelledby="dress">
+        <h2 id="dress">Código de vestimenta</h2>
+        <p>
+          Elegante y cómodo para una tarde inolvidable.<br>
+          Evita el color marfil y el azul oscuro (reservados para los novios).<br>
+          Lleva un abrigo ligero, el clima es fresco en la tarde.
+        </p>
+      </section>
+
       <p>
-        <a class="btn rsvp-button" href="formulario.html">Confirmar asistencia (RSVP)</a>
+        <a class="btn rsvp-button" href="formulario.html" aria-label="Confirmar asistencia a la boda">
+          Confirma tu asistencia
+        </a>
       </p>
     </main>
   </div>
 
   <script>
-    // Countdown a 24-Oct-2025 15:00 en Bogotá (UTC-05:00)
+    // Countdown (como en tu versión original: "Cargando contador..." -> luego muestra días/horas)
     const target = new Date('2025-10-24T15:00:00-05:00').getTime();
     const el = document.getElementById('countdown');
 
-    function fmt(n){ return String(n).padStart(2,'0'); }
+    function updateCountdown(){
+      const now = Date.now(), distance = Math.max(0, target - now);
+      const days = Math.floor(distance / 86400000);
+      const hours = Math.floor((distance % 86400000) / 3600000);
+      const minutes = Math.floor((distance % 3600000) / 60000);
+      const seconds = Math.floor((distance % 60000) / 1000);
 
-    function tick(){
-      const now = Date.now();
-      let diff = Math.max(0, target - now);
-
-      const d = Math.floor(diff / (1000*60*60*24)); diff -= d*24*60*60*1000;
-      const h = Math.floor(diff / (1000*60*60));    diff -= h*60*60*1000;
-      const m = Math.floor(diff / (1000*60));       diff -= m*60*1000;
-      const s = Math.floor(diff / 1000);
-
-      if (target <= now) {
-        el.textContent = "¡Hoy celebramos juntos!";
+      if (distance <= 0) {
+        el.textContent = '¡Hoy celebramos juntos!';
         return;
       }
-      el.textContent = `${d} días ${fmt(h)}:${fmt(m)}:${fmt(s)}`;
+      if (days === 0) {
+        el.textContent = `¡Es hoy! Faltan ${hours}h ${minutes}m ${seconds}s`;
+      } else {
+        el.textContent = `Faltan ${days} días, ${hours}h ${minutes}m ${seconds}s`;
+      }
     }
-
-    tick();
-    let timer = setInterval(()=>{
-      if (document.visibilityState === 'visible') tick();
-    }, 1000);
-    document.addEventListener('visibilitychange', ()=>{ if (document.visibilityState==='visible') tick(); });
+    updateCountdown();
+    setInterval(()=>{ if(document.visibilityState==='visible') updateCountdown(); }, 1000);
   </script>
 </body>
 </html>
