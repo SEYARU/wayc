@@ -17,8 +17,6 @@
 
   <!-- Tipografía -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
-
-  <!-- Preload del fondo -->
   <link rel="preload" as="image" href="decoracion.jpg" />
 
   <style>
@@ -39,7 +37,6 @@
       background-size:cover; background-position:center; background-repeat:no-repeat;
       background-attachment: fixed;
     }
-    /* Evitar parallax en táctiles */
     @media (hover:none) and (pointer:coarse){
       body{ background-attachment: scroll; background-position:center top; }
     }
@@ -64,17 +61,23 @@
     }
     .btn:focus-visible{ outline:3px solid #000; outline-offset:2px; }
 
-    /* Desktop: links visibles; botones ocultos */
+    /* Desktop: links visibles; chips ocultos */
     .map-links{ display:block; }
-    .map-buttons{ display:none; }
+    .map-chips{ display:none; }
 
-    /* Móvil táctil: mostrar botones grandes; ocultar links */
+    /* Móvil: chips discretos (menos protagónicos) */
     @media (hover:none) and (pointer:coarse){
       .map-links{ display:none; }
-      .map-buttons{
-        display:grid; gap:.6rem; margin-top:.4rem; grid-template-columns:1fr;
+      .map-chips{
+        display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; margin-top:.2rem;
       }
-      .map-buttons .btn{ width:100%; }
+      .chip{
+        display:inline-block; text-decoration:none; color:var(--color-prim);
+        border:1px solid #d9dde5; background: rgba(255,255,255,0.65);
+        padding:10px 12px; border-radius:999px; font-size:clamp(.95rem,3.4vw,1rem);
+        min-height:40px; line-height:1; box-shadow:none;
+      }
+      .chip:focus-visible{ outline:2px solid var(--color-prim); outline-offset:2px; }
     }
 
     @media (prefers-reduced-motion: reduce){ *{ scroll-behavior:auto } }
@@ -83,7 +86,7 @@
 <body>
   <div class="overlay">
     <main class="wrap">
-      <!-- TEXTOS ORIGINALES RESTAURADOS -->
+      <!-- Textos conservados -->
       <p class="intro">Acompáñanos en el día en que unimos nuestras vidas.</p>
       <h1>Boda de <strong>Alexandra</strong> y <strong>Cesar</strong></h1>
       <p>¡Tu compañía es un gran regalo! Pero si quieres hacernos un detallito, estaremos reuniendo aportes el día de nuestra boda para comenzar esta nueva aventura juntos.</p>
@@ -92,20 +95,12 @@
         <h2 id="evento">Detalles del evento</h2>
         <p><strong>Fecha:</strong> 24 de octubre de 2025 a las 3:00 PM</p>
         <div id="countdown" class="countdown" aria-live="polite">Cargando contador...</div>
-
-        <!-- Añadir al calendario -->
-        <p>
-          <a class="btn" download="Boda-Alexandra-Cesar.ics"
-             href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0AUID:boda-ac-2025%0ADTSTAMP:20250820T120000Z%0ADTSTART:20251024T200000Z%0ADTEND:20251024T230000Z%0ASUMMARY:Boda%20de%20Alexandra%20y%20Cesar%0ALOCATION:Restaurante%20Edelweiss,%20Cajic%C3%A1%0ADESCRIPTION:Acomp%C3%A1%C3%B1anos%20en%20el%20d%C3%ADa%20en%20que%20unimos%20nuestras%20vidas.%0AEND:VEVENT%0AEND:VCALENDAR">
-            Añadir al calendario
-          </a>
-        </p>
       </section>
 
       <section aria-labelledby="como-llegar">
         <h2 id="como-llegar">Cómo llegar</h2>
 
-        <!-- DESKTOP: links en línea (original) -->
+        <!-- DESKTOP: links clásicos -->
         <p class="map-links">
           Lugar: <strong>Restaurante Edelweiss, Cajicá</strong><br>
           Cómo llegar con:<br>
@@ -114,11 +109,11 @@
           <a href="http://maps.apple.com/?daddr=Restaurante+Edelweiss+Cajic%C3%A1" target="_blank" rel="noopener">Apple Maps</a>
         </p>
 
-        <!-- MÓVIL: botones grandes -->
-        <div class="map-buttons" aria-hidden="true">
-          <a class="btn" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Restaurante+Edelweiss+Cajic%C3%A1">Abrir en Google Maps</a>
-          <a class="btn" target="_blank" rel="noopener" href="https://waze.com/ul?ll=4.9189,-74.0312&navigate=yes">Abrir en Waze</a>
-          <a class="btn" target="_blank" rel="noopener" href="http://maps.apple.com/?daddr=Restaurante+Edelweiss+Cajic%C3%A1">Abrir en Apple Maps</a>
+        <!-- MÓVIL: chips discretos -->
+        <div class="map-chips" aria-hidden="true">
+          <a class="chip" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Restaurante+Edelweiss+Cajic%C3%A1">Google Maps</a>
+          <a class="chip" target="_blank" rel="noopener" href="https://waze.com/ul?ll=4.9189,-74.0312&navigate=yes">Waze</a>
+          <a class="chip" target="_blank" rel="noopener" href="http://maps.apple.com/?daddr=Restaurante+Edelweiss+Cajic%C3%A1">Apple Maps</a>
         </div>
       </section>
 
@@ -140,26 +135,24 @@
   </div>
 
   <script>
-    // Countdown (como en tu versión original: "Cargando contador..." -> luego muestra días/horas)
+    // Countdown a 24-Oct-2025 15:00 Bogotá (UTC-05:00)
     const target = new Date('2025-10-24T15:00:00-05:00').getTime();
     const el = document.getElementById('countdown');
 
     function updateCountdown(){
       const now = Date.now(), distance = Math.max(0, target - now);
-      const days = Math.floor(distance / 86400000);
-      const hours = Math.floor((distance % 86400000) / 3600000);
-      const minutes = Math.floor((distance % 3600000) / 60000);
-      const seconds = Math.floor((distance % 60000) / 1000);
+      const d = Math.floor(distance / 86400000);
+      const h = Math.floor((distance % 86400000) / 3600000);
+      const m = Math.floor((distance % 3600000) / 60000);
+      const s = Math.floor((distance % 60000) / 1000);
 
       if (distance <= 0) {
         el.textContent = '¡Hoy celebramos juntos!';
         return;
       }
-      if (days === 0) {
-        el.textContent = `¡Es hoy! Faltan ${hours}h ${minutes}m ${seconds}s`;
-      } else {
-        el.textContent = `Faltan ${days} días, ${hours}h ${minutes}m ${seconds}s`;
-      }
+      el.textContent = d === 0
+        ? `¡Es hoy! Faltan ${h}h ${m}m ${s}s`
+        : `Faltan ${d} días, ${h}h ${m}m ${s}s`;
     }
     updateCountdown();
     setInterval(()=>{ if(document.visibilityState==='visible') updateCountdown(); }, 1000);
