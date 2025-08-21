@@ -19,7 +19,6 @@
     html, body{
       margin:0; padding:0; min-height:100%;
       font-family:'Playfair Display', serif; color:#1A1A1A;
-      /* Fondo SIEMPRE visible */
       background-image:url('decoracion.jpg');
       background-size:cover; background-position:center; background-repeat:no-repeat;
     }
@@ -41,7 +40,7 @@
       padding:12px 14px; min-height:44px; width:100%; background:#fff;
     }
     select{ background-image: linear-gradient(to bottom, #fff, #fff); }
-    textarea{ min-height:64px; } /* área más pequeña */
+    textarea{ min-height:64px; }
     button{
       border:0; background:#2E3E4F; color:#fff; cursor:pointer;
       box-shadow: 0 8px 20px rgba(0,0,0,.07);
@@ -58,7 +57,6 @@
 
     .hint{ font-size:.9em; color:#5a6a7d; margin-top:-.3rem; }
 
-    /* Detalle dinámico del plato seleccionado */
     .menu-detalle{
       display:none; margin-top:.25rem;
       background:#f7f9fc; border:1px solid #dfe7f1; color:#25313f;
@@ -75,19 +73,17 @@
       <h1>Boda de <strong>Alexandra</strong> y <strong>Cesar</strong></h1>
       <p class="subtitulo" id="subtitulo" style="text-align:center">Confirma tu asistencia</p>
 
-      <!-- Mensaje de confirmación -->
       <div id="gracias" class="gracias" role="status" aria-live="polite">
         ¡Gracias por enviar tu respuesta! Te redirigiremos a la invitación en unos segundos.
       </div>
 
       <form id="formulario" name="rsvp" method="POST" novalidate>
-        <!-- Honeypot antispam -->
         <div class="sr-only" aria-hidden="true">
           <label for="hp">No llenar</label>
           <input id="hp" name="hp" autocomplete="off" tabindex="-1">
         </div>
 
-        <label for="nombre">Su nombre *</label>
+        <label for="nombre">Tu nombre *</label>
         <input type="text" name="nombre" id="nombre" required placeholder="Tu nombre y apellido"
                autocomplete="name" autocapitalize="words" inputmode="text" />
 
@@ -101,7 +97,6 @@
         </select>
         <div id="menu-hint" class="hint">Se mostrará el detalle del plato al seleccionar.</div>
 
-        <!-- Detalle dinámico según selección -->
         <div id="menu-detalle" class="menu-detalle" role="status" aria-live="polite"></div>
 
         <label for="alergias">¿Eres alérgico a algún ingrediente?</label>
@@ -114,7 +109,7 @@
 
   <script>
     (function(){
-      // --- Detalle dinámico de platos ---
+      // Detalle dinámico de platos (textos con ortografía corregida)
       const selectPlato = document.getElementById('plato');
       const detalle = document.getElementById('menu-detalle');
 
@@ -136,9 +131,9 @@
         }
       }
       selectPlato.addEventListener('change', renderDetalle);
-      renderDetalle(); // estado inicial (por si el navegador recuerda la selección)
+      renderDetalle();
 
-      // --- Lógica de envío ---
+      // Envío
       const form = document.getElementById('formulario');
       const btn  = form.querySelector('button');
       const ok   = document.getElementById('gracias');
@@ -151,9 +146,7 @@
       form.addEventListener('submit', async (e)=>{
         e.preventDefault();
 
-        if (form.hp && form.hp.value) return; // bot
-        if (localStorage.getItem('rsvp_enviado') === '1') return; // ya enviado
-
+        if (form.hp && form.hp.value) return;
         if (!form.nombre.value.trim() || !form.plato.value.trim()) {
           alert('Por favor completa nombre y preferencia de plato.');
           return;
@@ -172,9 +165,7 @@
           form.style.display = 'none';
           ok.classList.add('mostrar');
 
-          // Redirige a invitación en 10s
           setTimeout(()=>{ location.href = 'invitacion.html'; }, 10000);
-
         } catch (err){
           alert('No pudimos enviar tu confirmación. Intenta de nuevo en unos segundos.');
         } finally {
