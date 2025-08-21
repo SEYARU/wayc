@@ -41,7 +41,7 @@
       padding:12px 14px; min-height:44px; width:100%; background:#fff;
     }
     select{ background-image: linear-gradient(to bottom, #fff, #fff); }
-    textarea{ min-height:64px; } /* MÁS PEQUEÑO */
+    textarea{ min-height:64px; } /* área más pequeña */
     button{
       border:0; background:#2E3E4F; color:#fff; cursor:pointer;
       box-shadow: 0 8px 20px rgba(0,0,0,.07);
@@ -69,6 +69,15 @@
     .menu-info ul{ margin:.5rem 0 0 1rem; padding:0; }
     .menu-info li{ margin:.25rem 0; }
     .hint{ font-size:.9em; color:#5a6a7d; margin-top:-.3rem; }
+
+    /* Detalle dinámico del plato seleccionado */
+    .menu-detalle{
+      display:none; margin-top:.25rem;
+      background:#f7f9fc; border:1px solid #dfe7f1; color:#25313f;
+      border-radius:12px; padding:10px 12px;
+      font-size:calc(var(--fs-p) * .95);
+    }
+    .menu-detalle.mostrar{ display:block; }
   </style>
 </head>
 <body>
@@ -104,17 +113,19 @@
         </select>
         <div id="menu-hint" class="hint">Revisa los detalles del menú antes de elegir:</div>
 
+        <!-- Detalle dinámico según selección -->
+        <div id="menu-detalle" class="menu-detalle" role="status" aria-live="polite"></div>
+
         <!-- Detalles de los platos (colapsable y editable por ti) -->
         <details class="menu-info">
           <summary>Ver detalles de los platos</summary>
           <div class="content">
             <ul>
-              <li><strong>Cerdo:</strong> Panceta de cerdo cocinada a baja temperatura por 24 horas en salsa de panela y cerveza acompañado de puré de zanahorias con papa, y manzana fresca.</li>
-              <li><strong>Pollo:</strong> Suprema de pollo cocinado a baja temperatura por 5 horas relleno de tomate y jamon, en salsa de mostaza encurtida en miel acompañado con arroz de cerveza.</li>
-              <li><strong>Pescado:</strong> Filete de trucha al sarten con una lijera salsa de soja, vinagre balsamico y ajo acompañada de arroz de cerveza.</li>
-              <li><strong>Vegetariano:</strong> Exclusiva seleccion del cheft (sin proteína animal).</li>
+              <li><strong>Cerdo:</strong> Panceta de cerdo cocinada a baja temperatura durante 24 horas en salsa de panela y cerveza, acompañada de puré de zanahoria con papa y manzana fresca.</li>
+              <li><strong>Pollo:</strong> Suprema de pollo cocinada a baja temperatura durante 5 horas, rellena de tomate y jamón, en salsa de mostaza encurtida en miel, acompañada de arroz de cerveza.</li>
+              <li><strong>Pescado:</strong> Filete de trucha a la sartén con una ligera salsa de soja, vinagre balsámico y ajo, acompañada de arroz de cerveza.</li>
+              <li><strong>Vegetariano:</strong> Exclusiva selección del chef (sin proteína animal).</li>
             </ul>
-            <!-- TIP: Ajusta textos a tu menú real -->
           </div>
         </details>
 
@@ -128,11 +139,35 @@
 
   <script>
     (function(){
+      // --- Detalle dinámico de platos ---
+      const selectPlato = document.getElementById('plato');
+      const detalle = document.getElementById('menu-detalle');
+
+      const DESCRIPCIONES = {
+        'Cerdo': 'Panceta de cerdo cocinada a baja temperatura durante 24 horas en salsa de panela y cerveza, acompañada de puré de zanahoria con papa y manzana fresca.',
+        'Pollo': 'Suprema de pollo cocinada a baja temperatura durante 5 horas, rellena de tomate y jamón, en salsa de mostaza encurtida en miel, acompañada de arroz de cerveza.',
+        'Pescado': 'Filete de trucha a la sartén con una ligera salsa de soja, vinagre balsámico y ajo, acompañada de arroz de cerveza.',
+        'Vegetariano': 'Exclusiva selección del chef (sin proteína animal).'
+      };
+
+      function renderDetalle(){
+        const val = selectPlato.value;
+        if (DESCRIPCIONES[val]) {
+          detalle.textContent = DESCRIPCIONES[val];
+          detalle.classList.add('mostrar');
+        } else {
+          detalle.textContent = '';
+          detalle.classList.remove('mostrar');
+        }
+      }
+      selectPlato.addEventListener('change', renderDetalle);
+      renderDetalle(); // estado inicial (por si el navegador recuerda la selección)
+
+      // --- Lógica de envío ---
       const form = document.getElementById('formulario');
       const btn  = form.querySelector('button');
       const ok   = document.getElementById('gracias');
 
-      // Si ya envió, mostrar "gracias" y ocultar form
       if (localStorage.getItem('rsvp_enviado') === '1') {
         form.style.display = 'none';
         ok.classList.add('mostrar');
@@ -170,7 +205,7 @@
         } finally {
           btn.removeAttribute('aria-busy');
           btn.disabled = false;
-          btn.textContent = 'Confirmar asistencia';
+          btn.textContent = 'Enviar confirmación';
         }
       });
     })();
