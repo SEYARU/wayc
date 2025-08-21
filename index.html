@@ -14,84 +14,103 @@
   <link rel="preload" as="image" href="sobre.webp" type="image/webp" />
   <link rel="prefetch" href="invitacion.html" as="document">
 
-  <!-- Tipografía -->
+  <!-- Tipografía (consistencia del sitio) -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
-    :root{
-      --fs-h1: clamp(1.7rem, 6vw, 2.8rem);
-      --fs-p:  clamp(1rem, 3.6vw, 1.2rem);
-    }
-    *{ box-sizing: border-box; }
-    html, body{
-      margin:0; padding:0; height:100%;
-      font-family:'Playfair Display', serif;
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; padding: 0; height: 100%;
+      font-family: 'Playfair Display', serif;
       /* Regla global: decoracion SIEMPRE visible */
-      background-image:url('decoracion.jpg');
-      background-size:cover; background-position:center; background-repeat:no-repeat;
-      overflow:hidden;
+      background-image: url('decoracion.jpg');
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+      overflow: hidden;
     }
-    body.fade-out{ opacity:0; transition:opacity 1.2s ease; }
 
-    .container{
-      min-height:100svh; width:100vw;
-      /* Sobre + textura decoracion por encima con baja opacidad */
+    /* Transición de salida */
+    body.fade-out { opacity: 0; transition: opacity 1.2s ease; }
+
+    /* Contenedor “tappable” a pantalla completa */
+    .container {
+      min-height: 100svh; width: 100vw;
       background-image:
-        image-set(url('sobre.webp') type('image/webp'), url('sobre.jpg') type('image/jpeg'));
-      background-repeat:no-repeat;
-      background-position:center;
-      background-size:cover;
-      display:grid; place-items:center; position:relative; cursor:pointer; outline:none;
+        image-set(url('sobre.webp') type('image/webp'),
+                  url('sobre.jpg') type('image/jpeg'));
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: cover;
+      position: relative;
+      cursor: pointer;
+      outline: none;
+      touch-action: manipulation; /* menos latencia en móvil */
+      display: block;
     }
-    /* Capa sutil con decoracion por ENCIMA del sobre para que siempre se perciba */
-    .container::before{
-      content:""; position:absolute; inset:0;
-      background-image:url('decoracion.jpg');
-      background-size:cover; background-position:center; background-repeat:no-repeat;
-      opacity:.18;           /* sutil para no tapar el sobre */
-      mix-blend-mode:soft-light;
-      pointer-events:none;
-    }
-    .container::after{
-      content:""; position:absolute; inset:0;
-      background:linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.32));
-    }
-    .hero{
-      position:relative; color:#fff; text-align:center; padding:2rem;
-      text-shadow:0 1px 2px rgba(0,0,0,.45);
-    }
-    .hero h1{ margin:0 0 .5rem; font-size:var(--fs-h1); line-height:1.15 }
-    .hero p{ margin:0; font-size:var(--fs-p); line-height:1.5 }
-    .container:focus-visible{ outline:3px solid #fff; outline-offset:-3px; }
 
-    @media (prefers-reduced-motion: reduce){
-      .fade-out{ transition:none; }
+    /* Capa sutil con decoracion por ENCIMA del sobre para que siempre se perciba */
+    .container::before {
+      content: "";
+      position: absolute; inset: 0;
+      background-image: url('decoracion.jpg');
+      background-size: cover; background-position: center; background-repeat: no-repeat;
+      opacity: .18;                /* sutil para no tapar el sobre */
+      mix-blend-mode: soft-light;
+      pointer-events: none;
+    }
+
+    /* Degradado suave para contraste futuro (por si agregas elementos) */
+    .container::after {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.32));
+      pointer-events: none;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .fade-out { transition: none; }
     }
   </style>
 </head>
 <body>
-  <!-- Mantengo tus textos visibles -->
-  <div id="container" class="container" role="button" aria-label="Abrir invitación" tabindex="0" onclick="abrirInvitacion()">
-    <div class="hero" aria-hidden="true">
-      <h1>Boda de Alexandra y Cesar</h1>
-      <p>Toca para abrir</p>
-    </div>
-  </div>
+  <!-- Sin textos; todo el área funciona como botón accesible -->
+  <div id="container" class="container" role="button" aria-label="Abrir invitación" tabindex="0"></div>
 
   <noscript>
-    <p style="padding:1rem;color:#1A1A1A;background:rgba(255,255,255,.85)">Haz clic <a href="invitacion.html">aquí</a> si no se carga automáticamente.</p>
+    <p style="padding:1rem;color:#1A1A1A;background:rgba(255,255,255,.85)">
+      Haz clic <a href="invitacion.html">aquí</a> si no se carga automáticamente.
+    </p>
   </noscript>
 
   <script>
-    function abrirInvitacion(){
-      document.body.classList.add('fade-out');
-      setTimeout(()=>{ location.href='invitacion.html'; }, 1200);
+    // Vibración discreta antes de la transición (si el dispositivo la soporta)
+    function hapticTap() {
+      try {
+        const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reduce && typeof navigator.vibrate === 'function') {
+          navigator.vibrate(12); // toque corto ~12 ms
+        }
+      } catch (_) { /* sin dramas si no está soportado */ }
     }
-    // Accesible con teclado
+
+    function abrirInvitacion() {
+      hapticTap();                        // haptic antes del fade
+      document.body.classList.add('fade-out');
+      setTimeout(() => { location.href = 'invitacion.html'; }, 1200);
+    }
+
     const c = document.getElementById('container');
-    c.addEventListener('keydown', e=>{
-      if(e.key==='Enter' || e.key===' '){ e.preventDefault(); abrirInvitacion(); }
+    c.addEventListener('click', abrirInvitacion);
+    c.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        abrirInvitacion();
+      }
     });
+
+    // Haptic inmediato al tacto (feedback sutil sin navegar)
+    c.addEventListener('pointerdown', () => {
+      try { if (typeof navigator.vibrate === 'function') navigator.vibrate(8); } catch(_) {}
+    }, { passive: true });
   </script>
 </body>
 </html>
