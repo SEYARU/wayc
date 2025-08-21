@@ -5,16 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Invitación</title>
 
-  <!-- Apariencia del navegador -->
   <meta name="theme-color" content="#0f1a2c" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 
-  <!-- Precargas -->
   <link rel="preload" as="image" href="decoracion.jpg" />
   <link rel="preload" as="image" href="sobre.webp" type="image/webp" />
   <link rel="prefetch" href="invitacion.html" as="document">
 
-  <!-- Tipografía (consistencia del sitio) -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
 
   <style>
@@ -22,16 +19,12 @@
     html, body {
       margin: 0; padding: 0; height: 100%;
       font-family: 'Playfair Display', serif;
-      /* Regla global: decoracion SIEMPRE visible */
       background-image: url('decoracion.jpg');
       background-size: cover; background-position: center; background-repeat: no-repeat;
       overflow: hidden;
     }
-
-    /* Transición de salida */
     body.fade-out { opacity: 0; transition: opacity 1.2s ease; }
 
-    /* Contenedor “tappable” a pantalla completa */
     .container {
       min-height: 100svh; width: 100vw;
       background-image:
@@ -43,36 +36,30 @@
       position: relative;
       cursor: pointer;
       outline: none;
-      touch-action: manipulation; /* menos latencia en móvil */
+      touch-action: manipulation;
       display: block;
     }
-
-    /* Capa sutil con decoracion por ENCIMA del sobre para que siempre se perciba */
     .container::before {
       content: "";
       position: absolute; inset: 0;
       background-image: url('decoracion.jpg');
       background-size: cover; background-position: center; background-repeat: no-repeat;
-      opacity: .18;                /* sutil para no tapar el sobre */
+      opacity: .18;
       mix-blend-mode: soft-light;
       pointer-events: none;
     }
-
-    /* Degradado suave para contraste futuro (por si agregas elementos) */
     .container::after {
       content: "";
       position: absolute; inset: 0;
       background: linear-gradient(180deg, rgba(0,0,0,.20), rgba(0,0,0,.32));
       pointer-events: none;
     }
-
     @media (prefers-reduced-motion: reduce) {
       .fade-out { transition: none; }
     }
   </style>
 </head>
 <body>
-  <!-- Sin textos; todo el área funciona como botón accesible -->
   <div id="container" class="container" role="button" aria-label="Abrir invitación" tabindex="0"></div>
 
   <noscript>
@@ -82,22 +69,19 @@
   </noscript>
 
   <script>
-    // Vibración discreta antes de la transición (si el dispositivo la soporta)
     function hapticTap() {
       try {
         const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
         if (!reduce && typeof navigator.vibrate === 'function') {
-          navigator.vibrate(12); // toque corto ~12 ms
+          navigator.vibrate(12);
         }
-      } catch (_) { /* sin dramas si no está soportado */ }
+      } catch (_) {}
     }
-
     function abrirInvitacion() {
-      hapticTap();                        // haptic antes del fade
+      hapticTap();
       document.body.classList.add('fade-out');
       setTimeout(() => { location.href = 'invitacion.html'; }, 1200);
     }
-
     const c = document.getElementById('container');
     c.addEventListener('click', abrirInvitacion);
     c.addEventListener('keydown', (e) => {
@@ -106,8 +90,6 @@
         abrirInvitacion();
       }
     });
-
-    // Haptic inmediato al tacto (feedback sutil sin navegar)
     c.addEventListener('pointerdown', () => {
       try { if (typeof navigator.vibrate === 'function') navigator.vibrate(8); } catch(_) {}
     }, { passive: true });
