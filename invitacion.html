@@ -3,187 +3,212 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <title>Boda de Alexandra y Cesar</title>
+  <title>Confirma tu asistencia</title>
 
-  <!-- Apariencia del navegador -->
   <meta name="theme-color" content="#0f1a2c" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Boda de Alexandra y Cesar — 24 de octubre de 2025">
-  <meta property="og:description" content="Acompáñanos en el día en que unimos nuestras vidas. Cajicá, 3:00 PM.">
-  <meta property="og:image" content="sobre.webp">
-  <meta property="og:type" content="website">
-
-  <!-- Tipografía -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
-  <link rel="preload" as="image" href="decoracion.jpg" />
-
   <style>
     :root{
-      --fs-h1: clamp(1.9rem, 6.5vw, 3rem);
-      --fs-h2: clamp(1.2rem, 4.5vw, 1.6rem);
-      --fs-p:  clamp(1rem, 3.6vw, 1.15rem);
+      --fs-h1: clamp(1.7rem, 6vw, 2.4rem);
+      --fs-p:  clamp(1rem, 3.6vw, 1.1rem);
       --color-prim:#2E3E4F;
-      --color-text:#1A1A1A;
-      --boton-bg:#2E3E4F; --boton-tx:#fff;
     }
-    *{ box-sizing: border-box; }
+    *, *::before, *::after { box-sizing: border-box; }
     html, body{
       margin:0; padding:0; min-height:100%;
-      font-family:'Playfair Display', serif; color:var(--color-text);
+      font-family:'Playfair Display', serif; color:#1A1A1A;
       /* Fondo SIEMPRE visible */
       background-image:url('decoracion.jpg');
       background-size:cover; background-position:center; background-repeat:no-repeat;
-      background-attachment: fixed;
     }
-    @media (hover:none) and (pointer:coarse){
-      body{ background-attachment: scroll; background-position:center top; }
-    }
-
     .overlay{
-      min-height:100svh; padding: clamp(1rem, 4vw, 2rem);
+      min-height:100svh; display:grid; place-items:center; padding: clamp(1rem, 4vw, 2rem);
       background: rgba(255,255,255,0.85);
-      display:flex; align-items:center; justify-content:center;
     }
-    .wrap{ width:min(880px, 100%); display:grid; gap:1.2rem; text-align:center; }
-    h1{ font-size:var(--fs-h1); line-height:1.15; margin:.2rem 0; color:var(--color-prim); }
-    h2{ font-size:var(--fs-h2); line-height:1.25; margin:.2rem 0; color:var(--color-prim); }
-    p{ font-size:var(--fs-p); line-height:1.5; margin:.3rem 0; }
+    .card{
+      width:min(760px, 100%);
+      background:#fff; border-radius:20px; padding: clamp(1rem, 3vw, 2rem);
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+    }
+    h1{ margin:.2rem 0 .4rem; font-size:var(--fs-h1); color:var(--color-prim); text-align:center; }
+    p, label{ font-size:var(--fs-p); }
 
-    /* Contador con el mismo estilo que el texto “Restaurante Edelweiss, Cajicá” */
-    .countdown{
-      font-size:var(--fs-p);
-      color:var(--color-text);
-      margin:.2rem 0 .2rem;
+    form{ display:grid; gap:1rem; margin-top:.5rem; }
+    input, select, textarea, button{
+      font: inherit; border-radius:14px; border:1px solid #d9dde5;
+      padding:12px 14px; min-height:44px; width:100%; background:#fff;
     }
-    .countdown strong{
-      font-weight:700; /* como el <strong> del lugar */
+    select{ background-image: linear-gradient(to bottom, #fff, #fff); }
+    textarea{ min-height:64px; } /* área más pequeña */
+    button{
+      border:0; background:#2E3E4F; color:#fff; cursor:pointer;
+      box-shadow: 0 8px 20px rgba(0,0,0,.07);
     }
-    .countdown .time{
-      font-variant-numeric: tabular-nums;
-      font-weight:600;
-      margin-left:.35rem;
-    }
+    button[disabled]{ opacity:.6; cursor:not-allowed; }
 
-    .btn{
-      appearance:none; border:0; border-radius:16px;
-      padding:14px 18px; font-size:clamp(1rem,3.6vw,1.05rem);
-      background:var(--boton-bg); color:var(--boton-tx); text-decoration:none;
-      display:inline-block; min-height:44px; box-shadow:0 8px 20px rgba(0,0,0,.08);
+    .gracias{
+      display:none; text-align:center; padding:1rem; margin-top:.75rem;
+      background:#eef6ff; border:1px solid #cfe3ff; color:#0f3057; border-radius:14px;
     }
-    .btn:focus-visible{ outline:3px solid #000; outline-offset:2px; }
+    .gracias.mostrar{ display:block; }
 
-    /* Desktop: links visibles; chips ocultos */
-    .map-links{ display:block; }
-    .map-chips{ display:none; }
+    .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 
-    /* Móvil: chips discretos */
-    @media (hover:none) and (pointer:coarse){
-      .map-links{ display:none; }
-      .map-chips{
-        display:flex; flex-wrap:wrap; gap:.5rem; justify-content:center; margin-top:.2rem;
-      }
-      .chip{
-        display:inline-block; text-decoration:none; color:var(--color-prim);
-        border:1px solid #d9dde5; background: rgba(255,255,255,0.65);
-        padding:10px 12px; border-radius:999px; font-size:clamp(.95rem,3.4vw,1rem);
-        min-height:40px; line-height:1; box-shadow:none;
-      }
-      .chip:focus-visible{ outline:2px solid var(--color-prim); outline-offset:2px; }
+    /* Bloque “Ver detalles de los platos” */
+    .menu-info{ margin-top:-.3rem; }
+    .menu-info summary{
+      list-style:none; cursor:pointer; display:inline-flex; align-items:center; gap:.4rem;
+      font-size:calc(var(--fs-p) * .95); color:var(--color-prim);
+      border:1px dashed #b9c4d6; border-radius:999px; padding:8px 12px;
+      background:rgba(255,255,255,.7);
     }
+    .menu-info[open] summary{ background:#f7f9fc; }
+    .menu-info .content{ text-align:left; font-size:calc(var(--fs-p) * .95); color:#25313f; }
+    .menu-info ul{ margin:.5rem 0 0 1rem; padding:0; }
+    .menu-info li{ margin:.25rem 0; }
+    .hint{ font-size:.9em; color:#5a6a7d; margin-top:-.3rem; }
 
-    @media (prefers-reduced-motion: reduce){ *{ scroll-behavior:auto } }
+    /* Detalle dinámico del plato seleccionado */
+    .menu-detalle{
+      display:none; margin-top:.25rem;
+      background:#f7f9fc; border:1px solid #dfe7f1; color:#25313f;
+      border-radius:12px; padding:10px 12px;
+      font-size:calc(var(--fs-p) * .95);
+    }
+    .menu-detalle.mostrar{ display:block; }
   </style>
 </head>
 <body>
   <div class="overlay">
-    <main class="wrap">
-      <!-- Textos conservados -->
-      <p class="intro">Acompáñanos en el día en que unimos nuestras vidas.</p>
+    <div class="card">
+      <p class="intro" style="text-align:center">Acompáñanos en el día en que unimos nuestras vidas.</p>
       <h1>Boda de <strong>Alexandra</strong> y <strong>Cesar</strong></h1>
-      <p>¡Tu compañía es un gran regalo! Pero si quieres hacernos un detallito, estaremos reuniendo aportes el día de nuestra boda para comenzar esta nueva aventura juntos.</p>
+      <p class="subtitulo" id="subtitulo" style="text-align:center">Confirma tu asistencia</p>
 
-      <section aria-labelledby="evento">
-        <h2 id="evento">Detalles del evento</h2>
-        <p><strong>Fecha:</strong> 24 de octubre de 2025 a las 3:00 PM</p>
+      <!-- Mensaje de confirmación -->
+      <div id="gracias" class="gracias" role="status" aria-live="polite">
+        ¡Gracias por enviar tu respuesta! Te redirigiremos a la invitación en unos segundos.
+      </div>
 
-        <!-- Contador con estilo de texto normal + <strong> en el número -->
-        <p id="countdown" class="countdown" aria-live="polite">
-          <!-- Se rellena por JS -->
-        </p>
-
-        <!-- Botón justo debajo del contador -->
-        <p>
-          <a class="btn rsvp-button" href="formulario.html" aria-label="Confirmar asistencia a la boda">
-            Confirma tu asistencia
-          </a>
-        </p>
-      </section>
-
-      <section aria-labelledby="como-llegar">
-        <h2 id="como-llegar">Cómo llegar</h2>
-
-        <!-- DESKTOP: links clásicos -->
-        <p class="map-links">
-          Lugar: <strong>Restaurante Edelweiss, Cajicá</strong><br>
-          Cómo llegar con:<br>
-          <a href="https://www.google.com/maps/dir/?api=1&destination=Restaurante+Edelweiss+Cajic%C3%A1" target="_blank" rel="noopener">Google Maps</a> |
-          <a href="https://waze.com/ul?ll=4.9189,-74.0312&navigate=yes" target="_blank" rel="noopener">Waze</a> |
-          <a href="http://maps.apple.com/?daddr=Restaurante+Edelweiss+Cajic%C3%A1" target="_blank" rel="noopener">Apple Maps</a>
-        </p>
-
-        <!-- MÓVIL: chips discretos -->
-        <div class="map-chips" aria-hidden="true">
-          <a class="chip" target="_blank" rel="noopener" href="https://www.google.com/maps/dir/?api=1&destination=Restaurante+Edelweiss+Cajic%C3%A1">Google Maps</a>
-          <a class="chip" target="_blank" rel="noopener" href="https://waze.com/ul?ll=4.9189,-74.0312&navigate=yes">Waze</a>
-          <a class="chip" target="_blank" rel="noopener" href="http://maps.apple.com/?daddr=Restaurante+Edelweiss+Cajic%C3%A1">Apple Maps</a>
+      <form id="formulario" name="rsvp" method="POST" novalidate>
+        <!-- Honeypot antispam -->
+        <div class="sr-only" aria-hidden="true">
+          <label for="hp">No llenar</label>
+          <input id="hp" name="hp" autocomplete="off" tabindex="-1">
         </div>
-      </section>
 
-      <section aria-labelledby="dress">
-        <h2 id="dress">Código de vestimenta</h2>
-        <p>
-          Elegante y cómodo para una tarde inolvidable.<br>
-          Evita el color marfil y el azul oscuro (reservados para los novios).<br>
-          Lleva un abrigo ligero, el clima es fresco en la tarde.
-        </p>
-      </section>
-    </main>
+        <label for="nombre">Su nombre *</label>
+        <input type="text" name="nombre" id="nombre" required placeholder="Tu nombre y apellido"
+               autocomplete="name" autocapitalize="words" inputmode="text" />
+
+        <label for="plato">Preferencia de plato *</label>
+        <select name="plato" id="plato" required aria-describedby="menu-hint">
+          <option value="">Selecciona una opción</option>
+          <option>Cerdo</option>
+          <option>Pollo</option>
+          <option>Pescado</option>
+          <option>Vegetariano</option>
+        </select>
+        <div id="menu-hint" class="hint">Revisa los detalles del menú antes de elegir:</div>
+
+        <!-- Detalle dinámico según selección -->
+        <div id="menu-detalle" class="menu-detalle" role="status" aria-live="polite"></div>
+
+        <!-- Detalles de los platos (colapsable y editable por ti) -->
+        <details class="menu-info">
+          <summary>Ver detalles de los platos</summary>
+          <div class="content">
+            <ul>
+              <li><strong>Cerdo:</strong> Panceta de cerdo cocinada a baja temperatura durante 24 horas en salsa de panela y cerveza, acompañada de puré de zanahoria con papa y manzana fresca.</li>
+              <li><strong>Pollo:</strong> Suprema de pollo cocinada a baja temperatura durante 5 horas, rellena de tomate y jamón, en salsa de mostaza encurtida en miel, acompañada de arroz de cerveza.</li>
+              <li><strong>Pescado:</strong> Filete de trucha a la sartén con una ligera salsa de soja, vinagre balsámico y ajo, acompañada de arroz de cerveza.</li>
+              <li><strong>Vegetariano:</strong> Exclusiva selección del chef (sin proteína animal).</li>
+            </ul>
+          </div>
+        </details>
+
+        <label for="alergias">¿Eres alérgico a algún ingrediente?</label>
+        <textarea name="alergias" id="alergias" rows="2" placeholder="Ej.: frutos secos, mariscos, lácteos"></textarea>
+
+        <button type="submit">Enviar confirmación</button>
+      </form>
+    </div>
   </div>
 
   <script>
-    // Countdown a 24-Oct-2025 15:00 Bogotá (UTC-05:00)
-    const target = new Date('2025-10-24T15:00:00-05:00').getTime();
-    const el = document.getElementById('countdown');
+    (function(){
+      // --- Detalle dinámico de platos ---
+      const selectPlato = document.getElementById('plato');
+      const detalle = document.getElementById('menu-detalle');
 
-    const fmt = n => String(n).padStart(2,'0');
+      const DESCRIPCIONES = {
+        'Cerdo': 'Panceta de cerdo cocinada a baja temperatura durante 24 horas en salsa de panela y cerveza, acompañada de puré de zanahoria con papa y manzana fresca.',
+        'Pollo': 'Suprema de pollo cocinada a baja temperatura durante 5 horas, rellena de tomate y jamón, en salsa de mostaza encurtida en miel, acompañada de arroz de cerveza.',
+        'Pescado': 'Filete de trucha a la sartén con una ligera salsa de soja, vinagre balsámico y ajo, acompañada de arroz de cerveza.',
+        'Vegetariano': 'Exclusiva selección del chef (sin proteína animal).'
+      };
 
-    function render(d,h,m,s){
-      if (d <= 0 && h <= 0 && m <= 0 && s <= 0) {
-        el.textContent = '¡Hoy celebramos juntos!';
-        return;
+      function renderDetalle(){
+        const val = selectPlato.value;
+        if (DESCRIPCIONES[val]) {
+          detalle.textContent = DESCRIPCIONES[val];
+          detalle.classList.add('mostrar');
+        } else {
+          detalle.textContent = '';
+          detalle.classList.remove('mostrar');
+        }
       }
-      if (d === 0) {
-        el.innerHTML = `¡Es hoy! <span class="time">${fmt(h)}:${fmt(m)}:${fmt(s)}</span>`;
-      } else {
-        const label = d === 1 ? 'día' : 'días';
-        el.innerHTML = `Faltan <strong>${d}</strong> ${label} <span class="time">${fmt(h)}:${fmt(m)}:${fmt(s)}</span>`;
+      selectPlato.addEventListener('change', renderDetalle);
+      renderDetalle(); // estado inicial (por si el navegador recuerda la selección)
+
+      // --- Lógica de envío ---
+      const form = document.getElementById('formulario');
+      const btn  = form.querySelector('button');
+      const ok   = document.getElementById('gracias');
+
+      if (localStorage.getItem('rsvp_enviado') === '1') {
+        form.style.display = 'none';
+        ok.classList.add('mostrar');
       }
-    }
 
-    function tick(){
-      const now = Date.now();
-      let diff = Math.max(0, target - now);
-      const d = Math.floor(diff / 86400000); diff -= d*86400000;
-      const h = Math.floor(diff / 3600000);  diff -= h*3600000;
-      const m = Math.floor(diff / 60000);    diff -= m*60000;
-      const s = Math.floor(diff / 1000);
-      render(d,h,m,s);
-    }
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
 
-    tick();
-    setInterval(()=>{ if(document.visibilityState==='visible') tick(); }, 1000);
+        if (form.hp && form.hp.value) return; // bot
+        if (localStorage.getItem('rsvp_enviado') === '1') return; // ya enviado
+
+        if (!form.nombre.value.trim() || !form.plato.value.trim()) {
+          alert('Por favor completa nombre y preferencia de plato.');
+          return;
+        }
+
+        btn.disabled = true;
+        btn.textContent = 'Enviando…';
+        btn.setAttribute('aria-busy','true');
+
+        try{
+          const data = new FormData(form);
+          const url = "https://script.google.com/macros/s/AKfycbyXDC5hqh3yiG9h5Yb7unosbr5qubMoqsQhPgnjlRaHtDd2md3OiKQ1eLyZ0HL7YRgR/exec";
+          await fetch(url, { method:'POST', mode:'no-cors', body:data });
+
+          localStorage.setItem('rsvp_enviado','1');
+          form.style.display = 'none';
+          ok.classList.add('mostrar');
+
+          // Redirige a invitación en 10s
+          setTimeout(()=>{ location.href = 'invitacion.html'; }, 10000);
+
+        } catch (err){
+          alert('No pudimos enviar tu confirmación. Intenta de nuevo en unos segundos.');
+        } finally {
+          btn.removeAttribute('aria-busy');
+          btn.disabled = false;
+          btn.textContent = 'Enviar confirmación'; // ← mantiene el texto solicitado
+        }
+      });
+    })();
   </script>
 </body>
 </html>
