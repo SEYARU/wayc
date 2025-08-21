@@ -56,18 +56,6 @@
 
     .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 
-    /* Bloque “Ver detalles de los platos” */
-    .menu-info{ margin-top:-.3rem; }
-    .menu-info summary{
-      list-style:none; cursor:pointer; display:inline-flex; align-items:center; gap:.4rem;
-      font-size:calc(var(--fs-p) * .95); color:var(--color-prim);
-      border:1px dashed #b9c4d6; border-radius:999px; padding:8px 12px;
-      background:rgba(255,255,255,.7);
-    }
-    .menu-info[open] summary{ background:#f7f9fc; }
-    .menu-info .content{ text-align:left; font-size:calc(var(--fs-p) * .95); color:#25313f; }
-    .menu-info ul{ margin:.5rem 0 0 1rem; padding:0; }
-    .menu-info li{ margin:.25rem 0; }
     .hint{ font-size:.9em; color:#5a6a7d; margin-top:-.3rem; }
 
     /* Detalle dinámico del plato seleccionado */
@@ -111,23 +99,10 @@
           <option>Pescado</option>
           <option>Vegetariano</option>
         </select>
-        <div id="menu-hint" class="hint">Revisa los detalles del menú antes de elegir:</div>
+        <div id="menu-hint" class="hint">Se mostrará el detalle del plato al seleccionar.</div>
 
         <!-- Detalle dinámico según selección -->
         <div id="menu-detalle" class="menu-detalle" role="status" aria-live="polite"></div>
-
-        <!-- Detalles de los platos (colapsable y editable por ti) -->
-        <details class="menu-info">
-          <summary>Ver detalles de los platos</summary>
-          <div class="content">
-            <ul>
-              <li><strong>Cerdo:</strong> Panceta de cerdo cocinada a baja temperatura durante 24 horas en salsa de panela y cerveza, acompañada de puré de zanahoria con papa y manzana fresca.</li>
-              <li><strong>Pollo:</strong> Suprema de pollo cocinada a baja temperatura durante 5 horas, rellena de tomate y jamón, en salsa de mostaza encurtida en miel, acompañada de arroz de cerveza.</li>
-              <li><strong>Pescado:</strong> Filete de trucha a la sartén con una ligera salsa de soja, vinagre balsámico y ajo, acompañada de arroz de cerveza.</li>
-              <li><strong>Vegetariano:</strong> Exclusiva selección del chef (sin proteína animal).</li>
-            </ul>
-          </div>
-        </details>
 
         <label for="alergias">¿Eres alérgico a algún ingrediente?</label>
         <textarea name="alergias" id="alergias" rows="2" placeholder="Ej.: frutos secos, mariscos, lácteos"></textarea>
