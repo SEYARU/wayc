@@ -5,17 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Boda de Alexandra y Cesar</title>
 
-  <!-- Apariencia del navegador -->
   <meta name="theme-color" content="#0f1a2c" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 
-  <!-- Open Graph -->
   <meta property="og:title" content="Boda de Alexandra y Cesar — 24 de octubre de 2025">
   <meta property="og:description" content="Acompáñanos en el día en que unimos nuestras vidas. Cajicá, 3:00 PM.">
   <meta property="og:image" content="sobre.webp">
   <meta property="og:type" content="website">
 
-  <!-- Tipografía -->
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet" />
   <link rel="preload" as="image" href="decoracion.jpg" />
 
@@ -32,7 +29,6 @@
     html, body{
       margin:0; padding:0; min-height:100%;
       font-family:'Playfair Display', serif; color:var(--color-text);
-      /* Fondo SIEMPRE visible */
       background-image:url('decoracion.jpg');
       background-size:cover; background-position:center; background-repeat:no-repeat;
       background-attachment: fixed;
@@ -40,7 +36,6 @@
     @media (hover:none) and (pointer:coarse){
       body{ background-attachment: scroll; background-position:center top; }
     }
-
     .overlay{
       min-height:100svh; padding: clamp(1rem, 4vw, 2rem);
       background: rgba(255,255,255,0.85);
@@ -51,7 +46,6 @@
     h2{ font-size:var(--fs-h2); line-height:1.25; margin:.2rem 0; color:var(--color-prim); }
     p{ font-size:var(--fs-p); line-height:1.5; margin:.3rem 0; }
 
-    /* Contador con mismo estilo que el texto del lugar: normal + número en <strong> */
     .countdown{
       font-size:var(--fs-p);
       color:var(--color-text);
@@ -72,11 +66,9 @@
     }
     .btn:focus-visible{ outline:3px solid #000; outline-offset:2px; }
 
-    /* Desktop: links visibles; chips ocultos */
     .map-links{ display:block; }
     .map-chips{ display:none; }
 
-    /* Móvil: chips discretos */
     @media (hover:none) and (pointer:coarse){
       .map-links{ display:none; }
       .map-chips{
@@ -90,7 +82,6 @@
       }
       .chip:focus-visible{ outline:2px solid var(--color-prim); outline-offset:2px; }
     }
-
     @media (prefers-reduced-motion: reduce){ *{ scroll-behavior:auto } }
   </style>
 </head>
@@ -105,10 +96,9 @@
         <h2 id="evento">Detalles del evento</h2>
         <p><strong>Fecha:</strong> 24 de octubre de 2025 a las 3:00 PM</p>
 
-        <!-- Contador + botón inmediatamente debajo -->
         <p id="countdown" class="countdown" aria-live="polite"></p>
         <p>
-          <a class="btn rsvp-button" href="formulario.html" aria-label="Confirmar asistencia a la boda">
+          <a class="btn rsvp-button" href="formulario.html" aria-label="Confirmar tu asistencia a la boda">
             Confirma tu asistencia
           </a>
         </p>
@@ -117,7 +107,6 @@
       <section aria-labelledby="como-llegar">
         <h2 id="como-llegar">Cómo llegar</h2>
 
-        <!-- DESKTOP: links clásicos -->
         <p class="map-links">
           Lugar: <strong>Restaurante Edelweiss, Cajicá</strong><br>
           Cómo llegar con:<br>
@@ -126,7 +115,6 @@
           <a href="https://maps.apple.com/?daddr=4.927383,-74.022887&q=Restaurante%20Edelweiss" target="_blank" rel="noopener">Apple Maps</a>
         </p>
 
-        <!-- MÓVIL: chips discretos -->
         <div class="map-chips" aria-hidden="true">
           <a class="chip" href="https://www.google.com/maps/dir/?api=1&destination=4.927383,-74.022887" target="_blank" rel="noopener">Google Maps</a>
           <a class="chip" href="https://waze.com/ul?ll=4.927383,-74.022887&navigate=yes" target="_blank" rel="noopener">Waze</a>
@@ -149,7 +137,6 @@
     // Countdown a 24-Oct-2025 15:00 Bogotá (UTC-05:00)
     const target = new Date('2025-10-24T15:00:00-05:00').getTime();
     const el = document.getElementById('countdown');
-
     const fmt = n => String(n).padStart(2,'0');
 
     function render(d,h,m,s){
@@ -164,7 +151,6 @@
         el.innerHTML = `Faltan <strong>${d}</strong> ${label} <span class="time">${fmt(h)}:${fmt(m)}:${fmt(s)}</span>`;
       }
     }
-
     function tick(){
       const now = Date.now();
       let diff = Math.max(0, target - now);
@@ -174,7 +160,6 @@
       const s = Math.floor(diff / 1000);
       render(d,h,m,s);
     }
-
     tick();
     setInterval(()=>{ if(document.visibilityState==='visible') tick(); }, 1000);
   </script>
