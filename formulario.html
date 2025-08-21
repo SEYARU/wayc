@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <title>Confirma tu asistencia</title>
 
-  <!-- Apariencia del navegador -->
   <meta name="theme-color" content="#0f1a2c" media="(prefers-color-scheme: dark)">
   <meta name="theme-color" content="#ffffff" media="(prefers-color-scheme: light)">
 
@@ -20,7 +19,6 @@
     html, body{
       margin:0; padding:0; min-height:100%;
       font-family:'Playfair Display', serif; color:#1A1A1A;
-      /* Regla global: decoracion SIEMPRE visible */
       background-image:url('decoracion.jpg');
       background-size:cover; background-position:center; background-repeat:no-repeat;
     }
@@ -36,10 +34,11 @@
     h1{ margin:.2rem 0 .4rem; font-size:var(--fs-h1); color:var(--color-prim); text-align:center; }
     p, label{ font-size:var(--fs-p); }
 
-    form{ display:grid; gap:1rem; margin-top: .5rem; }
-    input, select, textarea, button{
+    form{ display:grid; gap:1rem; margin-top:.5rem; }
+    input, select, textarea, button, a.btn{
       font: inherit; border-radius:14px; border:1px solid #d9dde5;
       padding:12px 14px; min-height:44px; width:100%; background:#fff;
+      text-decoration:none; text-align:center; display:inline-block;
     }
     textarea{ min-height:100px; }
     button{
@@ -48,6 +47,11 @@
     }
     button[disabled]{ opacity:.6; cursor:not-allowed; }
 
+    .btn-outline{
+      background:#fff; color:#2E3E4F; border:1px solid #b9c4d6;
+      box-shadow:none;
+    }
+
     .gracias{
       display:none; text-align:center; padding:1rem; margin-top:.75rem;
       background:#eef6ff; border:1px solid #cfe3ff; color:#0f3057; border-radius:14px;
@@ -55,19 +59,27 @@
     .gracias.mostrar{ display:block; }
 
     .sr-only{ position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+
+    .actions{ display:grid; gap:.6rem; margin-top:.6rem; }
   </style>
 </head>
 <body>
   <div class="overlay">
     <div class="card">
-      <!-- TEXTOS ORIGINALES RESTAURADOS -->
       <p class="intro" style="text-align:center">Acompáñanos en el día en que unimos nuestras vidas.</p>
       <h1>Boda de <strong>Alexandra</strong> y <strong>Cesar</strong></h1>
       <p class="subtitulo" id="subtitulo" style="text-align:center">Confirma tu asistencia</p>
 
-      <!-- Mensaje accesible -->
+      <!-- Mensaje accesible + Añadir al calendario tras confirmar -->
       <div id="gracias" class="gracias" role="status" aria-live="polite">
-        ¡Gracias por enviar tu respuesta! Te redirigiremos a la invitación en unos segundos.
+        ¡Gracias por enviar tu respuesta!<br>
+        <div class="actions" style="margin-top:.6rem">
+          <a class="btn-outline" id="ics-gracias" download="Boda-Alexandra-Cesar.ics"
+             href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0AUID:boda-ac-2025%0ADTSTAMP:20250820T120000Z%0ADTSTART:20251024T200000Z%0ADTEND:20251024T230000Z%0ASUMMARY:Boda%20de%20Alexandra%20y%20Cesar%0ALOCATION:Restaurante%20Edelweiss,%20Cajic%C3%A1%0ADESCRIPTION:Acomp%C3%A1%C3%A1nos%20en%20el%20d%C3%ADa%20en%20que%20unimos%20nuestras%20vidas.%0AEND:VEVENT%0AEND:VCALENDAR">
+            Añadir al calendario
+          </a>
+          <small>(Te redirigiremos a la invitación en unos segundos)</small>
+        </div>
       </div>
 
       <form id="formulario" name="rsvp" method="POST" novalidate>
@@ -93,7 +105,14 @@
         <label for="alergias">¿Eres alérgico a algún ingrediente?</label>
         <textarea name="alergias" id="alergias" rows="3" placeholder="Cuéntanos si tienes alguna alergia o comentario adicional"></textarea>
 
-        <button type="submit">Confirmar asistencia</button>
+        <div class="actions">
+          <button type="submit">Confirmar asistencia</button>
+          <!-- Visible también en esta página (opcional, antes de enviar) -->
+          <a class="btn-outline" download="Boda-Alexandra-Cesar.ics"
+             href="data:text/calendar;charset=utf8,BEGIN:VCALENDAR%0AVERSION:2.0%0ABEGIN:VEVENT%0AUID:boda-ac-2025%0ADTSTAMP:20250820T120000Z%0ADTSTART:20251024T200000Z%0ADTEND:20251024T230000Z%0ASUMMARY:Boda%20de%20Alexandra%20y%20Cesar%0ALOCATION:Restaurante%20Edelweiss,%20Cajic%C3%A1%0ADESCRIPTION:Acomp%C3%A1%C3%A1nos%20en%20el%20d%C3%ADa%20en%20que%20unimos%20nuestras%20vidas.%0AEND:VEVENT%0AEND:VCALENDAR">
+            Añadir al calendario
+          </a>
+        </div>
       </form>
     </div>
   </div>
@@ -104,7 +123,7 @@
       const btn  = form.querySelector('button');
       const ok   = document.getElementById('gracias');
 
-      // Si ya envió, mostrar mensaje y ocultar form
+      // Si ya envió, mostrar "gracias" e ICS; ocultar form
       if (localStorage.getItem('rsvp_enviado') === '1') {
         form.style.display = 'none';
         ok.classList.add('mostrar');
@@ -113,13 +132,9 @@
       form.addEventListener('submit', async (e)=>{
         e.preventDefault();
 
-        // Honeypot
-        if (form.hp && form.hp.value) return;
+        if (form.hp && form.hp.value) return; // bot
+        if (localStorage.getItem('rsvp_enviado') === '1') return; // ya enviado
 
-        // Evitar doble envío
-        if (localStorage.getItem('rsvp_enviado') === '1') return;
-
-        // Validación simple
         if (!form.nombre.value.trim() || !form.plato.value.trim()) {
           alert('Por favor completa nombre y preferencia de plato.');
           return;
@@ -131,7 +146,6 @@
 
         try{
           const data = new FormData(form);
-          // Endpoint original de tu Apps Script (con no-cors conservando tu flujo)
           const url = "https://script.google.com/macros/s/AKfycbyXDC5hqh3yiG9h5Yb7unosbr5qubMoqsQhPgnjlRaHtDd2md3OiKQ1eLyZ0HL7YRgR/exec";
           await fetch(url, { method:'POST', mode:'no-cors', body:data });
 
@@ -139,7 +153,7 @@
           form.style.display = 'none';
           ok.classList.add('mostrar');
 
-          // Redirige a invitación en 10s (como pediste)
+          // Redirige a invitación en 10s (tiempo suficiente para tocar el .ics)
           setTimeout(()=>{ location.href = 'invitacion.html'; }, 10000);
 
         } catch (err){
