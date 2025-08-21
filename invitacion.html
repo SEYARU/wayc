@@ -51,33 +51,19 @@
     h2{ font-size:var(--fs-h2); line-height:1.25; margin:.2rem 0; color:var(--color-prim); }
     p{ font-size:var(--fs-p); line-height:1.5; margin:.3rem 0; }
 
-    /* Contador */
+    /* Contador con el mismo estilo que el texto “Restaurante Edelweiss, Cajicá” */
     .countdown{
-      margin:.2rem 0 .4rem;
-      color:var(--color-prim);
+      font-size:var(--fs-p);
+      color:var(--color-text);
+      margin:.2rem 0 .2rem;
     }
-    .countdown .days{
-      display:inline-block;
-      font-weight:800;
-      font-size:clamp(2rem, 9vw, 3.2rem);
-      line-height:1;
-      padding:4px 12px;
-      border-radius:14px;
-      background:rgba(46,62,79,0.08);
-    }
-    .countdown .label{
-      font-weight:700;
-      margin-left:.35rem;
-      font-size:clamp(1rem,4.2vw,1.2rem);
-      vertical-align:middle;
+    .countdown strong{
+      font-weight:700; /* como el <strong> del lugar */
     }
     .countdown .time{
-      display:block;
-      margin-top:.25rem;
       font-variant-numeric: tabular-nums;
       font-weight:600;
-      font-size:clamp(1rem,4.5vw,1.2rem);
-      letter-spacing:.5px;
+      margin-left:.35rem;
     }
 
     .btn{
@@ -122,13 +108,15 @@
         <h2 id="evento">Detalles del evento</h2>
         <p><strong>Fecha:</strong> 24 de octubre de 2025 a las 3:00 PM</p>
 
-        <!-- Contador + botón inmediatamente debajo -->
-        <div id="countdown" class="countdown" aria-live="polite">
+        <!-- Contador con estilo de texto normal + <strong> en el número -->
+        <p id="countdown" class="countdown" aria-live="polite">
           <!-- Se rellena por JS -->
-        </div>
+        </p>
+
+        <!-- Botón justo debajo del contador -->
         <p>
           <a class="btn rsvp-button" href="formulario.html" aria-label="Confirmar asistencia a la boda">
-            Confirmar asistencia (RSVP)
+            Confirma tu asistencia
           </a>
         </p>
       </section>
@@ -171,18 +159,16 @@
 
     const fmt = n => String(n).padStart(2,'0');
 
-    function renderCountdown(d,h,m,s){
+    function render(d,h,m,s){
       if (d <= 0 && h <= 0 && m <= 0 && s <= 0) {
-        el.innerHTML = '<span class="time">¡Hoy celebramos juntos!</span>';
+        el.textContent = '¡Hoy celebramos juntos!';
         return;
       }
       if (d === 0) {
-        el.innerHTML = `<span class="days">0</span><span class="label">día</span>
-                        <span class="time">¡Es hoy! ${fmt(h)}:${fmt(m)}:${fmt(s)}</span>`;
+        el.innerHTML = `¡Es hoy! <span class="time">${fmt(h)}:${fmt(m)}:${fmt(s)}</span>`;
       } else {
         const label = d === 1 ? 'día' : 'días';
-        el.innerHTML = `<span class="days">${d}</span><span class="label">${label}</span>
-                        <span class="time">${fmt(h)}:${fmt(m)}:${fmt(s)}</span>`;
+        el.innerHTML = `Faltan <strong>${d}</strong> ${label} <span class="time">${fmt(h)}:${fmt(m)}:${fmt(s)}</span>`;
       }
     }
 
@@ -193,7 +179,7 @@
       const h = Math.floor(diff / 3600000);  diff -= h*3600000;
       const m = Math.floor(diff / 60000);    diff -= m*60000;
       const s = Math.floor(diff / 1000);
-      renderCountdown(d,h,m,s);
+      render(d,h,m,s);
     }
 
     tick();
