@@ -32,7 +32,7 @@
     html, body{
       margin:0; padding:0; min-height:100%;
       font-family:'Playfair Display', serif; color:var(--color-text);
-      /* Regla global: decoracion SIEMPRE visible */
+      /* Fondo SIEMPRE visible */
       background-image:url('decoracion.jpg');
       background-size:cover; background-position:center; background-repeat:no-repeat;
       background-attachment: fixed;
@@ -51,7 +51,34 @@
     h2{ font-size:var(--fs-h2); line-height:1.25; margin:.2rem 0; color:var(--color-prim); }
     p{ font-size:var(--fs-p); line-height:1.5; margin:.3rem 0; }
 
-    .countdown{ font-variant-numeric: tabular-nums; font-weight:700; color:var(--color-prim); letter-spacing:.5px; }
+    /* Contador */
+    .countdown{
+      margin:.2rem 0 .4rem;
+      color:var(--color-prim);
+    }
+    .countdown .days{
+      display:inline-block;
+      font-weight:800;
+      font-size:clamp(2rem, 9vw, 3.2rem);
+      line-height:1;
+      padding:4px 12px;
+      border-radius:14px;
+      background:rgba(46,62,79,0.08);
+    }
+    .countdown .label{
+      font-weight:700;
+      margin-left:.35rem;
+      font-size:clamp(1rem,4.2vw,1.2rem);
+      vertical-align:middle;
+    }
+    .countdown .time{
+      display:block;
+      margin-top:.25rem;
+      font-variant-numeric: tabular-nums;
+      font-weight:600;
+      font-size:clamp(1rem,4.5vw,1.2rem);
+      letter-spacing:.5px;
+    }
 
     .btn{
       appearance:none; border:0; border-radius:16px;
@@ -65,7 +92,7 @@
     .map-links{ display:block; }
     .map-chips{ display:none; }
 
-    /* Móvil: chips discretos (menos protagónicos) */
+    /* Móvil: chips discretos */
     @media (hover:none) and (pointer:coarse){
       .map-links{ display:none; }
       .map-chips{
@@ -94,7 +121,16 @@
       <section aria-labelledby="evento">
         <h2 id="evento">Detalles del evento</h2>
         <p><strong>Fecha:</strong> 24 de octubre de 2025 a las 3:00 PM</p>
-        <div id="countdown" class="countdown" aria-live="polite">Cargando contador...</div>
+
+        <!-- Contador + botón inmediatamente debajo -->
+        <div id="countdown" class="countdown" aria-live="polite">
+          <!-- Se rellena por JS -->
+        </div>
+        <p>
+          <a class="btn rsvp-button" href="formulario.html" aria-label="Confirmar asistencia a la boda">
+            Confirmar asistencia (RSVP)
+          </a>
+        </p>
       </section>
 
       <section aria-labelledby="como-llegar">
@@ -125,12 +161,6 @@
           Lleva un abrigo ligero, el clima es fresco en la tarde.
         </p>
       </section>
-
-      <p>
-        <a class="btn rsvp-button" href="formulario.html" aria-label="Confirmar asistencia a la boda">
-          Confirma tu asistencia
-        </a>
-      </p>
     </main>
   </div>
 
@@ -139,23 +169,35 @@
     const target = new Date('2025-10-24T15:00:00-05:00').getTime();
     const el = document.getElementById('countdown');
 
-    function updateCountdown(){
-      const now = Date.now(), distance = Math.max(0, target - now);
-      const d = Math.floor(distance / 86400000);
-      const h = Math.floor((distance % 86400000) / 3600000);
-      const m = Math.floor((distance % 3600000) / 60000);
-      const s = Math.floor((distance % 60000) / 1000);
+    const fmt = n => String(n).padStart(2,'0');
 
-      if (distance <= 0) {
-        el.textContent = '¡Hoy celebramos juntos!';
+    function renderCountdown(d,h,m,s){
+      if (d <= 0 && h <= 0 && m <= 0 && s <= 0) {
+        el.innerHTML = '<span class="time">¡Hoy celebramos juntos!</span>';
         return;
       }
-      el.textContent = d === 0
-        ? `¡Es hoy! Faltan ${h}h ${m}m ${s}s`
-        : `Faltan ${d} días, ${h}h ${m}m ${s}s`;
+      if (d === 0) {
+        el.innerHTML = `<span class="days">0</span><span class="label">día</span>
+                        <span class="time">¡Es hoy! ${fmt(h)}:${fmt(m)}:${fmt(s)}</span>`;
+      } else {
+        const label = d === 1 ? 'día' : 'días';
+        el.innerHTML = `<span class="days">${d}</span><span class="label">${label}</span>
+                        <span class="time">${fmt(h)}:${fmt(m)}:${fmt(s)}</span>`;
+      }
     }
-    updateCountdown();
-    setInterval(()=>{ if(document.visibilityState==='visible') updateCountdown(); }, 1000);
+
+    function tick(){
+      const now = Date.now();
+      let diff = Math.max(0, target - now);
+      const d = Math.floor(diff / 86400000); diff -= d*86400000;
+      const h = Math.floor(diff / 3600000);  diff -= h*3600000;
+      const m = Math.floor(diff / 60000);    diff -= m*60000;
+      const s = Math.floor(diff / 1000);
+      renderCountdown(d,h,m,s);
+    }
+
+    tick();
+    setInterval(()=>{ if(document.visibilityState==='visible') tick(); }, 1000);
   </script>
 </body>
 </html>
